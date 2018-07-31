@@ -10,7 +10,10 @@
 				class="list" @scrolltolower="loadMore" @scrolltoupper="refesh"  bindscroll="scroll">
 				
 				<section class="item" v-for="(item, index) in dispatchList " :key='index'>
-					<dispatch-card :dispatchInfo='item'></dispatch-card>
+					<div class="w" @click='handleToDispatchDetails(item)'>
+						<dispatch-card :dispatchInfo='item' ></dispatch-card>
+					</div>
+					
 				</section>
 			</scroll-view>
 			
@@ -66,6 +69,13 @@ export default {
 			this.refreshLoading = true;
 			this.getList();
 		},
+		handleToDispatchDetails(item){
+			console.info(item);
+            wx.navigateTo({
+  				url: `../dispatch-details/main?id=${item.id}&dispatchNumber=${item.dispatchNumber}`
+            })
+            
+        },
 		// flag == 1 加载更多
 		getList(flag){
 			const self =this;
@@ -80,9 +90,6 @@ export default {
 				}else{
 					this.dispatchList = data.content.data;
 				}
-				
-				console.log(this.dispatchList)
-				console.log(data);
 				this.dispatchList.forEach((item) => {
 					item.dispatchType = item.application.dispatchType;
 					transformListData(item);

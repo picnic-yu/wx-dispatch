@@ -1,5 +1,5 @@
 <template>
-    <section class='dispatch-card' @click='handleToDispatchDetails'>
+    <section class='dispatch-card' >
         <i-row class='item'>
             <i-col span="8" i-class="col-class">派工单编号:</i-col>
             <i-col span="16" i-class="col-class">{{dispatchInfo.dispatchNumber}}</i-col>
@@ -40,11 +40,8 @@ export default {
     watch: {},
 
     methods: {
-        handleToDispatchDetails(){
-            wx.navigateTo({
-  				url: '../../dispatch-details/main.js'
-			})
-        }
+
+        
     },
 
     mounted() {},
