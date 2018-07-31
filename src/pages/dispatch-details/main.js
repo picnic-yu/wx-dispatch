@@ -7,11 +7,10 @@ export default {
     config:{
         usingComponents:{
             'i-button':'../../../static/iview/button/index',
-            'i-icon':'../../../static/iview/icon/index',
-            'i-spin':'../../../static/iview/spin/index',
+            
             "i-row": "../../../static/iview/row/index",
             "i-col": "../../../static/iview/col/index"
         },
-        navigationBarTitleText:'我的派工单',
+        navigationBarTitleText:'派工单详情',
     }
 }

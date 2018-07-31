@@ -64,6 +64,7 @@ export default {
 			this.userName = 'levy.li';
 			this.userName = 'sean.liu';
 			this.userName = 'srr';
+			this.userName = 'chen';
 			this.passWord = 'admin'
 			if(!this.userName){
 				return wx.showToast({

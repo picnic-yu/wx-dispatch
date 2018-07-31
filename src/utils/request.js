@@ -1,80 +1,89 @@
 
-const rootDocment = 'http://172.16.100.210:8081/management-api/';
+const rootDocment = 'http://172.16.100.210:8083/management-api/';
 let header = {
-  'Authorization': null,
+  'authorization': '',
   'content-type': 'application/json'
 }
-// 获取token
-wx.getStorage({
-    key: 'token',
-    success: function(res) {
-        console.log(res.data)
-        header.Authorization = res.data;
-    } 
-})
+
+// 同步获取
+// try {
+//     var token = wx.getStorageSync('token');
+//     console.log(token,'token')
+//     if(token){
+//         header.authorization = token;
+//     }
+    
+// } catch (e) {
+//     // Do something when catch error
+// }
 export const  getReq =(url, cb)=> {
+    try {
+        var token = wx.getStorageSync('token');
+        console.log(token,'token')
+        if(token){
+            header.authorization = token;
+        }
+        
+    } catch (e) {
+        // Do something when catch error
+    }
     wx.showLoading({
         title: '加载中',
     })
     console.log("header=="),
     console.log(header)
-    // 获取token
-    wx.getStorage({
-        key: 'token',
-        success: function(response) {
-            console.log(response.data)
-            header.Authorization = response.data;
-            wx.request({
-                url: rootDocment + url,
-                header: header,
-                success: function (res) {
-                    wx.hideLoading();
-                    return typeof cb == "function" && cb(res.data)
-                },
-                fail: function () {
-                    wx.hideLoading();
-                    wx.showModal({
-                        title: '网络错误',
-                        content: '网络出错，请刷新重试',
-                        showCancel: false
-                    })
-                    return typeof cb == "function" && cb(false)
-                }
+    wx.request({
+        url: rootDocment + url,
+        header: header,
+        success: function (res) {
+            wx.hideLoading();
+            return typeof cb == "function" && cb(res.data)
+        },
+        fail: function () {
+            wx.hideLoading();
+            wx.showModal({
+                title: '网络错误',
+                content: '网络出错，请刷新重试',
+                showCancel: false
             })
-        } 
+            return typeof cb == "function" && cb(false)
+        }
     })
     
 }
  
 export const  postReq = (url, data, cb) => {
+    try {
+        var token = wx.getStorageSync('token');
+        console.log(token,'token')
+        if(token){
+            header.authorization = token;
+        }
+        
+    } catch (e) {
+        // Do something when catch error
+    }
     wx.showLoading({
         title: '加载中',
     })
-    wx.getStorage({
-        key: 'token',
-        success: function(response) {
-            console.log(response.data)
-            header.Authorization = response.data;
-            wx.request({
-                url: rootDocment + url,
-                header: header,
-                data: data,
-                method: 'Post',
-                success: function (res) {
-                    wx.hideLoading();
-                    return typeof cb == "function" && cb(res.data)
-                },
-                fail: function () {
-                    wx.hideLoading();
-                    wx.showModal({
-                        title: '网络错误',
-                        content: '网络出错，请刷新重试',
-                        showCancel: false
-                    })
-                    return typeof cb == "function" && cb(false)
-                }
+    wx.request({
+        url: rootDocment + url,
+        header: header,
+        data: data,
+        method: 'Post',
+        success: function (res) {
+            wx.hideLoading();
+            return typeof cb == "function" && cb(res.data)
+        },
+        fail: function () {
+            wx.hideLoading();
+            wx.showModal({
+                title: '网络错误',
+                content: '网络出错，请刷新重试',
+                showCancel: false
             })
-        } 
+            return typeof cb == "function" && cb(false)
+        }
     })
     
 
