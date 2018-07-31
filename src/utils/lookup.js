@@ -1,6 +1,18 @@
 
 export const lookUpdata = {
-	
+	"ShipmentFromTypeLookup": [{
+		"code": "ORDER",
+		"value": "订单"
+	}, {
+		"code": "TRIAL",
+		"value": "试用单"
+	},{
+		"code": "SUPPORT",
+		"value": "事件"
+	}, {
+		"code": "DISPATCH",
+		"value": "派工单"
+	}],
 	"DispatchTypeLookup": [{
 			"code": "INSTALLED",
 			"value": "装机"
