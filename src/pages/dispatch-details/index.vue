@@ -2,7 +2,7 @@
     <section class='dispatch-details'>
         <div class="details-wrap">
             <dispatch-info :dispatchInfoData='dispatchInfoData' ></dispatch-info>
-            <shipment-details  ></shipment-details>
+            <shipment-details :shipmentDetailsData='shipmentDetailsData' ></shipment-details>
         </div>
         <div class="btn-wrap">
             <i-button @click='handleAddEquipment' type='primary'>添加设备</i-button>
@@ -32,7 +32,17 @@ const transformListData = (item) => {
         'fromType', 
         'fromType'
     );
+    
 };
+const transformDetailsData = (item) => {
+    lookupUtils.transformData(
+        item,
+        lookUpdata.StockCategoryLookup,
+        'stockType', 
+        'stockTypeText'
+    );
+    // 
+}
 export default {
     components: {
         dispatchInfo,       //基本信息组件
@@ -44,6 +54,7 @@ export default {
     data() {
         return {
             dispatchInfoData:{},        //基本信息数据
+            shipmentDetailsData:[]
         }
 
     },
@@ -55,7 +66,6 @@ export default {
             wx.navigateTo({
   				url: '../equipment-form/main'
 			})
-            console.log('添加设备')
         }
     },
 
@@ -66,15 +76,17 @@ export default {
         const url = `dispatch/order/${options.id}`; 
         const shipmentDetailsUrl = `dispatch/order/info`
         const dispatchNumber = options.dispatchNumber;
-        console.log(options);
         getReq(url, (data) => {
             transformListData(data.content);
-            data.code == 200 ? this.dispatchInfoData = data.content: this.dispatchInfoData = {}
-            
-            console.log(data);
+            data.code == 200 ? this.dispatchInfoData = data.content: this.dispatchInfoData = {};
         });
         postReq(shipmentDetailsUrl,{dispatchNumber:dispatchNumber},(data) => {
-            console.log(data)
+            if(data.code == 200 && data.content){
+                this.shipmentDetailsData = data.content.shipmentDetailList;
+                this.shipmentDetailsData.forEach((item)=> {
+                    transformDetailsData(item);
+                });
+            }
         });
     }
 }

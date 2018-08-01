@@ -62,12 +62,9 @@
                             wx.canvasToTempFilePath({
                                 canvasId: 'photo_canvas',
                                 success: function (res) {
-                                console.log(res.tempFilePath)
                                 self.image = res.tempFilePath;
-                                console.log(self.image,'image')
                                 },
                                 fail: function (error) {
-                                console.log(error)
                                 }
                             })
                             },100)

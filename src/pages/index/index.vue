@@ -64,13 +64,11 @@ export default {
 	},
 	methods: {
 		refesh(){
-			console.log('refresh')
 
 			this.refreshLoading = true;
 			this.getList();
 		},
 		handleToDispatchDetails(item){
-			console.info(item);
             wx.navigateTo({
   				url: `../dispatch-details/main?id=${item.id}&dispatchNumber=${item.dispatchNumber}`
             })

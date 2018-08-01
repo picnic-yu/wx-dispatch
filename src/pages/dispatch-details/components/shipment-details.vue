@@ -8,10 +8,11 @@
             <i-col span="6" i-class="col-class">库存类型</i-col>
             <i-col span="14" i-class="col-class">库存编号</i-col>
         </i-row>
-        <!-- <i-row class='item'>
-            <i-col span="9" i-class="col-class">派工单编号:</i-col>
-            <i-col span="15" i-class="col-class">{{dispatchInfoData.dispatchNumber}}</i-col>
-        </i-row> -->
+        <i-row class='item' v-for="(item, index) in shipmentDetailsData " :key='index'>
+            <i-col span="4" i-class="col-class">{{index+1}}</i-col>
+            <i-col span="6" i-class="col-class">{{item.stockTypeText}}</i-col>
+            <i-col span="14" i-class="col-class">{{item.stockNumber}}</i-col>
+        </i-row>
         
     </section>
 </template>

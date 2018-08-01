@@ -1,5 +1,12 @@
 
 export const lookUpdata = {
+	"StockCategoryLookup": [{
+		"code": "IOTCARD",
+		"value": "物联卡"
+	}, {
+		"code": "SENSOR",
+		"value": "传感器"
+	}],
 	"ShipmentFromTypeLookup": [{
 		"code": "ORDER",
 		"value": "订单"
