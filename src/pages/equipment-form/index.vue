@@ -17,22 +17,7 @@
                     </i-col>
                 </i-row>
             </div>
-            <div class='item-wrap'>
-                <i-row class="input-item">
-                    <i-col span="8" i-class="col-class">
-                        工厂名称:
-                    </i-col>
-                    <i-col span="16" >
-                        <i-input 
-                            :value="saveParam.factoryName" 
-                            mode="wrapped" 
-                            @change='factoryNameChange'
-                            placeholder="请输入工厂名称" 
-                        />
-                    </i-col>
-                </i-row>
-            </div>
-            <div class='item-wrap'>
+             <div class='item-wrap'>
                 <i-row class="input-item">
                     <i-col span="8" i-class="col-class">
                         设备制造商:
@@ -64,6 +49,52 @@
                     </i-col>
                 </i-row>
             </div>
+             <div class='item-wrap'>
+                <i-row class="input-item">
+                    <i-col span="8" i-class="col-class">
+                        传感器编号:
+                        <span class='required-icon'>*</span>
+                    </i-col>
+                    <i-col span="16" >
+                        <i-input @click='handleSearch(1)'
+                            :value="saveParam.sensorNumber" 
+                            mode="wrapped"
+                            placeholder="请选择传感器编号" 
+                        />
+                    </i-col>
+                </i-row>
+            </div>
+            <div class='item-wrap'>
+                <i-row class="input-item">
+                    <i-col span="8" i-class="col-class">
+                        物联卡编号:
+                        <span class='required-icon'>*</span>
+                    </i-col>
+                    <i-col span="16" >
+                        <i-input 
+                            :value="saveParam.sensorNumber" 
+                            mode="wrapped"
+                            placeholder="请选择物联卡编号" 
+                        />
+                    </i-col>
+                </i-row>
+            </div>
+            <div class='item-wrap'>
+                <i-row class="input-item">
+                    <i-col span="8" i-class="col-class">
+                        工厂名称:
+                    </i-col>
+                    <i-col span="16" >
+                        <i-input 
+                            :value="saveParam.factoryName" 
+                            mode="wrapped" 
+                            @change='factoryNameChange'
+                            placeholder="请输入工厂名称" 
+                        />
+                    </i-col>
+                </i-row>
+            </div>
+           
             <div class='item-wrap'>
                 <i-row class="input-item">
                     <i-col span="8" i-class="col-class">
@@ -125,36 +156,7 @@
                     </i-col>
                 </i-row>
             </div>
-            <div class='item-wrap'>
-                <i-row class="input-item">
-                    <i-col span="8" i-class="col-class">
-                        传感器编号:
-                        <span class='required-icon'>*</span>
-                    </i-col>
-                    <i-col span="16" >
-                        <i-input 
-                            :value="saveParam.sensorNumber" 
-                            mode="wrapped"
-                            placeholder="请选择传感器编号" 
-                        />
-                    </i-col>
-                </i-row>
-            </div>
-            <div class='item-wrap'>
-                <i-row class="input-item">
-                    <i-col span="8" i-class="col-class">
-                        物联卡编号:
-                        <span class='required-icon'>*</span>
-                    </i-col>
-                    <i-col span="16" >
-                        <i-input 
-                            :value="saveParam.sensorNumber" 
-                            mode="wrapped"
-                            placeholder="请选择物联卡编号" 
-                        />
-                    </i-col>
-                </i-row>
-            </div>
+           
             <div class='item-wrap'>
                 <i-row class="input-item">
                     <i-col span="8" i-class="col-class">
@@ -300,6 +302,12 @@ export default {
         },
         userPasswordChange(e){
             this.saveParam.userPasswordChange = e.target.detail.value;
+        },
+        // flag 1代表传感器搜索页面 2代表物联卡搜索页面
+        handleSearch(flag){
+            wx.navigateTo({
+  				url: `../search/main?type=${flag}`
+			})
         }
   	}
 }
