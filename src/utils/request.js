@@ -51,8 +51,8 @@ export const  getReq =(url, cb)=> {
     })
     
 }
- 
-export const  postReq = (url, data, cb) => {
+//  flag if  true close loading
+export const  postReq = (url, data, cb,flag=false) => {
     try {
         var token = wx.getStorageSync('token');
         console.log(token,'token')
@@ -63,9 +63,12 @@ export const  postReq = (url, data, cb) => {
     } catch (e) {
         // Do something when catch error
     }
-    wx.showLoading({
-        title: '加载中',
-    })
+    if(!flag){
+        wx.showLoading({
+            title: '加载中',
+        })
+    }
+    
     wx.request({
         url: rootDocment + url,
         header: header,

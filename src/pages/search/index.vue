@@ -1,7 +1,7 @@
 
 
 <template>
-    <section  >
+    <section>
         <div class='search-wrap'>
             <div class="input-wrap">
                 <i-input  
@@ -22,21 +22,27 @@
         </div>
         <div class='list-wrap' v-if='searchType==1'>
             <i-cell-group>
-                <i-cell  v-for="(item) in serialNumberList " :key='item.id'>2222</i-cell>
+                <i-cell  
+                    v-for="item in serialNumberList " 
+                    @click='selectContent(item.serialNumber)' 
+                    :key='item.id'>{{item.serialNumber}}</i-cell>
                 
             </i-cell-group>
         </div>
-         <div class='list-wrap' v-if='searchType==2'>
+        <div class='list-wrap' v-if='searchType==2'>
             <i-cell-group>
-                <i-cell  v-for="(item) in serialNumberList " :key='item.id'>2222</i-cell>
-                
+                <i-cell  
+                    v-for="item in numberOfCardList " 
+                    @click='selectContent(item.numberOfCard)' 
+                    :key='item.id'>{{item.numberOfCard}}</i-cell>
             </i-cell-group>
         </div>
     </section>
 </template>
 <script >
-import {  postReq } from '../../utils/request.js';
+import { postReq } from '../../utils/request.js';
 const serialNumberListUrl = 'sensors/list';
+const numberOfCardUrl = `iotCards/list`;
 export default {
     components: {},
 
@@ -52,33 +58,54 @@ export default {
                 serialNumber:'',
                 stockState:'DELIVERY'
             },
+            numberOfCardJson :{
+                keyWords:'equipment_info',
+                numberOfCard:'',
+                stockState:'DELIVERY'
+            },
+            numberOfCardList:[],
             serialNumberList:[],//  传感器数据
         }
 
     },
     onLoad: function (options) {
-        console.log(options.type);
+        console.log(options,'options');
         this.searchType = options.type;
-        if(this.searchType == 1 && !this.searchValue){
+        this.searchValue = options.searchValue;
+        options.type == 1 ? this.placeholder = '输入传感器编号':this.placeholder = '输入物联卡号';
+        if(this.searchType == 1 ){
+            
             this.getSerialNumberList();
         }
+        if(this.searchType == 2 ){
+            this.getNumberOfCardList();
+        }
+
     },
     watch: {},
 
     methods: {
         handleSubmit() {
-           
+            this.navigateToEquipmentFormPage(this.searchValue);
+        },
+        getNumberOfCardList(){
+            this.numberOfCardJson.numberOfCard = this.searchValue;
+            postReq(numberOfCardUrl, this.numberOfCardJson, (data) => {
+                data.code == 200 ? this.numberOfCardList = data.content : [];
+            }, true);
         },
         getSerialNumberList(){
+            this.serialNumberJson.serialNumber = this.searchValue;
             postReq(serialNumberListUrl, this.serialNumberJson, (data) => {
-                console.log(data)
-            })
+                data.code == 200 ? this.serialNumberList = data.content : [];
+            }, true);
         },
         handleScan(){
             wx.scanCode({
                 success: (res) => {
                     // 扫码成功后获取数据返回
                     this.searchValue = res.result;
+                    this.navigateToEquipmentFormPage(this.searchValue);
                 }
             })
         },
@@ -86,11 +113,31 @@ export default {
             this.searchValue = e.target.detail.value;
             // 传感器编号
             if(this.searchType == 1) {
-                this.serialNumberJson.serialNumber = this.searchValue;
                 this.getSerialNumberList();
             }
             // 物联卡编号
+            if(this.searchType == 2) {
+                this.getNumberOfCardList();
+            }
         },
+        selectContent(value){
+            this.searchValue = value;
+            this.navigateToEquipmentFormPage(value);
+        },
+        navigateToEquipmentFormPage(value){
+            // 传感器编号
+            if(this.searchType == 1) {
+                wx.navigateTo({
+                    url: `../equipment-form/main?sensorNumber=${value}`
+                })
+            }
+            // 物联卡编号
+            if(this.searchType == 2) {
+                wx.navigateTo({
+                    url: `../equipment-form/main?cardNumber=${value}`
+                })
+            }    
+        }
     },
 
     mounted() {},

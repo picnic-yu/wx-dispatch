@@ -56,8 +56,9 @@
                         <span class='required-icon'>*</span>
                     </i-col>
                     <i-col span="16" >
-                        <i-input @click='handleSearch(1)'
+                        <i-input @click='handleSearch(1,saveParam.sensorNumber)'
                             :value="saveParam.sensorNumber" 
+                            disabled='false'
                             mode="wrapped"
                             placeholder="请选择传感器编号" 
                         />
@@ -72,8 +73,10 @@
                     </i-col>
                     <i-col span="16" >
                         <i-input 
-                            :value="saveParam.sensorNumber" 
+                            @click='handleSearch(2,saveParam.cardNumber)'
+                            :value="saveParam.cardNumber" 
                             mode="wrapped"
+                            disabled='false'
                             placeholder="请选择物联卡编号" 
                         />
                     </i-col>
@@ -102,9 +105,10 @@
                     </i-col>
                     <i-col span="16" >
                         <i-input 
-                            :value="saveParam.equipmentName" 
+                            @click='openEquipmentnameModel'
+                            :value="saveParam.equipmentNameText" 
                             mode="wrapped"
-                            @change='equipmentNameChange' 
+                            disabled='false'
                             placeholder="请输入设备名称" 
                         />
                     </i-col>
@@ -217,43 +221,133 @@
                     </i-col>
                 </i-row>
             </div>
+            <div class='item-wrap'>
+                <i-row >
+                    <i-col span="8" >
+                        图片:
+                    </i-col>
+                    <i-col span="16" >
+                        <image 
+                            @click='choseImage'
+                            class='upload-image' 
+                            :src='saveParam.equipmentImage'></image>
+                    </i-col>
+                </i-row>
+            </div>
         </div>
         <div class="submit-btn">
             <i-button @click='handleSubmit' type='primary'>提交</i-button>
         </div>
-		
+		<section>
+            <i-modal  :visible="equipmentnemeModelStatus" :show-ok='false' :show-cancel='false'>
+                <view 
+                    @click="handleSelectEquipmentName(item)"
+                    v-for="item in equipmentNameList " 
+                    :key='item.code'>{{item.value}}</view>
+            </i-modal>
+        </section>
+        <canvas canvas-id="photo_canvas" style="position: absolute;left:-300px;top:-300px;"></canvas>
 	</section>
 </template>
 
 <script>
+import lookupUtils from '../../utils/lookupUtils';
+import { lookUpdata } from '../../utils/lookup'
 
+const transformData = (item) => {
+		//DispatchTypeLookup 派工类型
+    lookupUtils.transformData(
+        item,
+        lookUpdata.EquipmentNameLookup,
+        'equipmentName', 
+        'equipmentNameText'
+    );
+    
+};
 export default {
 	computed: {
     	
     },
     data:{
+        equipmentnemeModelStatus:false,
+        equipmentNameList:lookUpdata.EquipmentNameLookup,
         saveParam: {
             equipmentNumber:'',//设备序列号
             factoryName:'',//工厂名称
             manufacturerName:'',//设备制造商
             manufacturerSimpleName:'',//制造商简称
-            equipmentName:'001',
+            equipmentName:'001',//设备名称code
+            equipmentNameText:'CNC加工中心',//设备名称
             equipmentModel: '',//设备型号
             systemLabel:'',//系统厂牌
             systemVersion:'',//系统版本
             sensorNumber:'',//传感器编号
-            cardNumber:'',//物联卡编号
+            cardNumber:'1',//物联卡编号
             ipAddress:'',//IP地址
             portNumber:'',//端口号
             userName:'',//用户
             userPassword:'',//密码
-            
             image:{},//图片文件对象
-            equipmentImage:'',
+            equipmentImage:'/static/images/upload.png',
         },
     },
   	methods: {
-		// 退出登陆，页面跳转，清除数据缓存
+        choseImage(){
+            const self =this;
+            wx.chooseImage({
+                count: 1,
+                sizeType: ['compressed'],
+                sourceType: ['album', 'camera'],
+                success: function (photo) {
+                    wx.getImageInfo({
+                        src: photo.tempFilePaths[0],
+                        success: function(res){
+                            var ctx = wx.createCanvasContext('photo_canvas');
+                            var ratio = 1.5;
+                            var canvasWidth = res.width
+                            var canvasHeight = res.height;
+                            // 保证宽高均在200以内
+                            while (canvasWidth > 200 || canvasHeight > 200){
+                            //比例取整
+                                canvasWidth = Math.trunc(res.width / ratio)
+                                canvasHeight = Math.trunc(res.height / ratio)
+                            ratio++;
+                            }
+                            // _this.setData({
+                            // canvasWidth: canvasWidth,
+                            // canvasHeight: canvasHeight
+                            // })//设置canvas尺寸
+                            // self.canvasWidth = canvasWidth;
+                            // self.canvasHeight = canvasHeight;
+                            ctx.drawImage(photo.tempFilePaths[0], 0, 0, 200, 200)
+                            ctx.draw()
+                            //下载canvas图片
+                            setTimeout(function(){
+                            wx.canvasToTempFilePath({
+                                canvasId: 'photo_canvas',
+                                success: function (res) {
+                                self.saveParam.equipmentImage = res.tempFilePath;
+                                },
+                                fail: function (error) {
+                                }
+                            })
+                            },100)
+                        }
+                    })
+
+                }
+            })
+        },
+        openEquipmentnameModel(){
+            this.equipmentnemeModelStatus = true;
+        },
+        // 选择设备名称
+        handleSelectEquipmentName(item){
+            this.equipmentnemeModelStatus = false;
+            this.saveParam.equipmentName = item.code;
+            this.saveParam.equipmentNameText = item.value;
+        },
+		// 提交设备信息到本地
 		handleSubmit(){
 			console.log(this.saveParam)
         },
@@ -274,9 +368,9 @@ export default {
             this.saveParam.manufacturerName = e.target.detail.value;
         },
         // 设备名称
-        equipmentNameChange(e){
-            this.saveParam.equipmentName = e.target.detail.value;
-        },
+        // equipmentNameChange(e){
+        //     this.saveParam.equipmentName = e.target.detail.value;
+        // },
         // 设备型号
         equipmentModelChange(e){
             this.saveParam.equipmentModel = e.target.detail.value;
@@ -304,12 +398,20 @@ export default {
             this.saveParam.userPasswordChange = e.target.detail.value;
         },
         // flag 1代表传感器搜索页面 2代表物联卡搜索页面
-        handleSearch(flag){
+        handleSearch(flag,searchValue){
             wx.navigateTo({
-  				url: `../search/main?type=${flag}`
+  				url: `../search/main?type=${flag}&searchValue=${searchValue}`
 			})
         }
-  	}
+    },
+    onLoad:function (options){
+        if(options.sensorNumber){
+            this.saveParam.sensorNumber = options.sensorNumber;
+        }
+        if(options.cardNumber){
+            this.saveParam.cardNumber = options.cardNumber;
+        }
+    }
 }
 </script>
 
@@ -337,5 +439,13 @@ export default {
     line-height: 8.5vh;
     color:red;
 }
-
+/* model button hidden */
+.i-modal-actions{
+    display:none !important;
+}
+.upload-image{
+    width:200px;
+    height:200px;
+    margin-left:10px;
+}
 </style>
