@@ -252,8 +252,8 @@
 
 <script>
 import lookupUtils from '../../utils/lookupUtils';
-import { lookUpdata } from '../../utils/lookup'
-
+import { lookUpdata } from '../../utils/lookup';
+import {rootDocment, rootUrl} from '../../utils/request.js';
 const transformData = (item) => {
 		//DispatchTypeLookup 派工类型
     lookupUtils.transformData(
@@ -287,7 +287,6 @@ export default {
             portNumber:'',//端口号
             userName:'',//用户
             userPassword:'',//密码
-            image:{},//图片文件对象
             equipmentImage:'/static/images/upload.png',
         },
     },
@@ -320,13 +319,16 @@ export default {
                             // self.canvasWidth = canvasWidth;
                             // self.canvasHeight = canvasHeight;
                             ctx.drawImage(photo.tempFilePaths[0], 0, 0, 200, 200)
+                            console.log(photo.tempFilePaths[0])
                             ctx.draw()
                             //下载canvas图片
                             setTimeout(function(){
                             wx.canvasToTempFilePath({
                                 canvasId: 'photo_canvas',
                                 success: function (res) {
-                                self.saveParam.equipmentImage = res.tempFilePath;
+                                
+                                console.log(res.tempFilePath)
+                                self.uploadImage(res.tempFilePath);
                                 },
                                 fail: function (error) {
                                 }
@@ -336,6 +338,28 @@ export default {
                     })
 
                 }
+            })
+        },
+        uploadImage(path){
+            const self = this;
+            const token = wx.getStorageSync('token');
+            wx.uploadFile({
+                url: `${rootDocment}common/uploadFile/upload`,      
+                filePath: path,
+                name: 'file',
+                header: {  
+                    "Content-Type": "multipart/form-data",
+                    'accept': 'application/json',
+                    'path':'img',
+                    'authorization': token   
+                },
+                success: function(res){
+                    const data = JSON.parse(res.data);
+                    data.code == 200 ? self.saveParam.equipmentImage = `${rootUrl}${data.content}`:'/static/images/upload.png';
+                },
+                fail: function(res){
+
+                },
             })
         },
         openEquipmentnameModel(){
@@ -349,6 +373,50 @@ export default {
         },
 		// 提交设备信息到本地
 		handleSubmit(){
+            if(!this.saveParam.equipmentNumber){
+				return wx.showToast({
+					title: '请输入设备序列号',
+					duration: 2000,
+					icon:'none'
+				})
+            }
+            if(!this.saveParam.manufacturerName){
+				return wx.showToast({
+					title: '请输入设备制造商',
+					duration: 2000,
+					icon:'none'
+				})
+            }
+            if(!this.saveParam.manufacturerSimpleName){
+				return wx.showToast({
+					title: '请输入制造商简称',
+					duration: 2000,
+					icon:'none'
+				})
+            }
+            if(!this.saveParam.sensorNumber){
+				return wx.showToast({
+					title: '请选择传感器编号',
+					duration: 2000,
+					icon:'none'
+				})
+            }
+            if(!this.saveParam.cardNumber){
+				return wx.showToast({
+					title: '请选择物联卡编号',
+					duration: 2000,
+					icon:'none'
+				})
+            }
+            if(!this.saveParam.systemLabel){
+				return wx.showToast({
+					title: '请输入系统厂牌',
+					duration: 2000,
+					icon:'none'
+				})
+            }
+
+            // 下面处理本地设备列表数据
 			console.log(this.saveParam)
         },
         // 制造商简称
@@ -446,6 +514,6 @@ export default {
 .upload-image{
     width:200px;
     height:200px;
-    margin-left:10px;
+    margin-left:25px;
 }
 </style>

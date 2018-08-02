@@ -1,5 +1,6 @@
 
-const rootDocment = 'http://172.16.100.210:8083/management-api/';
+export const rootDocment = 'http://172.16.100.210:8083/management-api/';
+export const rootUrl = 'http://172.16.100.210:8083';
 let header = {
   'authorization': '',
   'content-type': 'application/json'
