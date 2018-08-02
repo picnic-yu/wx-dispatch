@@ -76,6 +76,7 @@ export const  postReq = (url, data, cb,flag=false) => {
         data: data,
         method: 'Post',
         success: function (res) {
+            console.log(res.statusCode)
             wx.hideLoading();
             return typeof cb == "function" && cb(res.data)
         },

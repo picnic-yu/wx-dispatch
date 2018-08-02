@@ -264,11 +264,14 @@ const transformData = (item) => {
     );
     
 };
+
 export default {
 	computed: {
     	
     },
     data:{
+        equipmentList:[],
+        equipmentIndex:null,
         equipmentnemeModelStatus:false,
         equipmentNameList:lookUpdata.EquipmentNameLookup,
         saveParam: {
@@ -417,7 +420,14 @@ export default {
             }
 
             // 下面处理本地设备列表数据
-			console.log(this.saveParam)
+            console.log(this.saveParam)
+            if( this.equipmentIndex !== null ){
+                this.equipmentList[this.equipmentIndex] = this.saveParam;
+            }else{
+                this.equipmentList.push(this.saveParam); 
+            }
+            wx.setStorageSync('equipmentList', this.equipmentList);
+            wx.setStorageSync('equipmentIndex', this.equipmentIndex);
         },
         // 制造商简称
         manufacturerSimpleNameChange(e){
@@ -473,12 +483,27 @@ export default {
         }
     },
     onLoad:function (options){
+
+        wx.getStorage({
+            key: 'equipmentList',
+            success: (res) => {
+                this.equipmentList = res.data;
+                console.log(this.equipmentList)
+            } 
+        })
+        wx.getStorage({
+            key: 'equipmentIndex',
+            success: (res) => {
+                this.equipmentIndex = res.data;
+            } 
+        })
         if(options.sensorNumber){
             this.saveParam.sensorNumber = options.sensorNumber;
         }
         if(options.cardNumber){
             this.saveParam.cardNumber = options.cardNumber;
         }
+
     }
 }
 </script>

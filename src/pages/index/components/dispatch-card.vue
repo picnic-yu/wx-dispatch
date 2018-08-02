@@ -51,7 +51,7 @@ export default {
 
 <style  scoped>
     .dispatch-card{
-        width: 90%;
+        width: 86%;
         border-radius: 5px;
         padding:15px;
         border: 1px solid #e6e6e6;

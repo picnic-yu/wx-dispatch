@@ -1,86 +1,57 @@
 <template>
-<section class="page">
-<section>
-   
-    <canvas canvas-id="photo_canvas" style="position: absolute;left:-300px;top:-300px;"></canvas>
-    <button @click ='dealImage'>dianji </button>
-    <image :src='image'/>
-</section>
-</section>
+	<section>
+		<section class="item" v-for="(item, index) in equipmentList " @click='handleToDispatchDetails(index)' :key='index'>
+			<equipment-card :equipmentItem='item' ></equipment-card>
+		</section>
+	</section>
 </template>
 
-<script >
- export default {
- components: {},
+<script>
+import equipmentCard from './components/equipment-card';
+export default {
+	data () {
+		return {
+			equipmentList:[
+				{
+					equipmentNumber:'232332342323232323',
+					cardNumber:'2232232323323232',
+					sensorNumber:'32123233232323232'
+					
+				}
+			],
+		}
+	},
+	components: {
+		equipmentCard
+	},
+	mounted(){
+		
+	},
+	onLoad:function (options){
 
- props: {},
-
- data() {
- return {
-    imgViewList:[],
-    image:'',
-    canvasWidth:'',
-    canvasHeight:''
- }
- 
- },
-
- watch: {},
-
-    methods: {
-        dealImage(){
-            const self =this;
-            wx.chooseImage({
-                count: 1,
-                sizeType: ['compressed'],
-                sourceType: ['album', 'camera'],
-                success: function (photo) {
-                    wx.getImageInfo({
-                        src: photo.tempFilePaths[0],
-                        success: function(res){
-                            var ctx = wx.createCanvasContext('photo_canvas');
-                            var ratio = 2;
-                            var canvasWidth = res.width
-                            var canvasHeight = res.height;
-                            // 保证宽高均在200以内
-                            while (canvasWidth > 200 || canvasHeight > 200){
-                            //比例取整
-                            canvasWidth = Math.trunc(res.width / ratio)
-                            canvasHeight = Math.trunc(res.height / ratio)
-                            ratio++;
-                            }
-                            // _this.setData({
-                            // canvasWidth: canvasWidth,
-                            // canvasHeight: canvasHeight
-                            // })//设置canvas尺寸
-                            self.canvasWidth = canvasWidth;
-                            self.canvasHeight = canvasHeight;
-                            ctx.drawImage(photo.tempFilePaths[0], 0, 0, canvasWidth, canvasHeight)
-                            ctx.draw()
-                            //下载canvas图片
-                            setTimeout(function(){
-                            wx.canvasToTempFilePath({
-                                canvasId: 'photo_canvas',
-                                success: function (res) {
-                                self.image = res.tempFilePath;
-                                },
-                                fail: function (error) {
-                                }
-                            })
-                            },100)
-                        }
-                    })
-
-                }
+        wx.getStorage({
+            key: 'equipmentList',
+            success: (res) => {
+				this.equipmentList = res.data;
+				console.log(this.equipmentList);
+            } 
+        })
+    },
+	methods: {
+		handleToDispatchDetails(index){
+			wx.setStorageSync('equipmentIndex', index);
+            wx.navigateTo({
+  				url: `../equipment-form/main`
             })
         },
-    },
-
- mounted() {},
-
- }
+	}
+}
 </script>
 
-<style  scoped>
- 
+<style scoped>
+.item{
+	width:100%;
+}
+
+
 </style>

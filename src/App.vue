@@ -7,7 +7,8 @@ export default {
     const equipmentIndex = wx.getStorageSync('equipmentIndex') || null
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
-    wx.setStorageSync('equipmentList', equipmentList)
+    wx.setStorageSync('equipmentList', equipmentList);
+    wx.setStorageSync('equipmentIndex', equipmentIndex);
 
     console.log('app created and cache logs by setStorageSync')
   }

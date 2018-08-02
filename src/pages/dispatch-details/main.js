@@ -7,7 +7,6 @@ export default {
     config:{
         usingComponents:{
             'i-button':'../../../static/iview/button/index',
-            
             "i-row": "../../../static/iview/row/index",
             "i-col": "../../../static/iview/col/index"
         },
