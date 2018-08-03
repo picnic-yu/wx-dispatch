@@ -484,19 +484,14 @@ export default {
     },
     onLoad:function (options){
 
-        wx.getStorage({
-            key: 'equipmentList',
-            success: (res) => {
-                this.equipmentList = res.data;
-                console.log(this.equipmentList)
-            } 
-        })
-        wx.getStorage({
-            key: 'equipmentIndex',
-            success: (res) => {
-                this.equipmentIndex = res.data;
-            } 
-        })
+        
+        this.equipmentList = wx.getStorageSync('equipmentList');
+        this.equipmentIndex = wx.getStorageSync('equipmentIndex');
+        try{
+            Object.assign(this.saveParam,this.equipmentList[this.equipmentIndex]);
+        }catch(e){
+            console.log(e);
+        }
         if(options.sensorNumber){
             this.saveParam.sensorNumber = options.sensorNumber;
         }

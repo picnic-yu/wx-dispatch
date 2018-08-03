@@ -5,18 +5,15 @@ let header = {
   'authorization': '',
   'content-type': 'application/json'
 }
+// 无权限跳到登陆页面
+const goToLogin = (status) => {
+    if(status == 401){
+        wx.navigateTo({
+            url: '/pages/login/main'
+      })
+    }
+}
 
-// 同步获取
-// try {
-//     var token = wx.getStorageSync('token');
-//     console.log(token,'token')
-//     if(token){
-//         header.authorization = token;
-//     }
-    
-// } catch (e) {
-//     // Do something when catch error
-// }
 export const  getReq =(url, cb)=> {
     try {
         var token = wx.getStorageSync('token');
@@ -38,6 +35,7 @@ export const  getReq =(url, cb)=> {
         header: header,
         success: function (res) {
             wx.hideLoading();
+            goToLogin(res.statusCode);
             return typeof cb == "function" && cb(res.data)
         },
         fail: function () {
@@ -77,6 +75,8 @@ export const  postReq = (url, data, cb,flag=false) => {
         method: 'Post',
         success: function (res) {
             console.log(res.statusCode)
+            goToLogin(res.statusCode);
+            
             wx.hideLoading();
             return typeof cb == "function" && cb(res.data)
         },

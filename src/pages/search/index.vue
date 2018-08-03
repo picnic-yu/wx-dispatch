@@ -69,7 +69,6 @@ export default {
 
     },
     onLoad: function (options) {
-        console.log(options,'options');
         this.searchType = options.type;
         this.searchValue = options.searchValue;
         options.type == 1 ? this.placeholder = '输入传感器编号':this.placeholder = '输入物联卡号';
@@ -127,13 +126,14 @@ export default {
         navigateToEquipmentFormPage(value){
             // 传感器编号
             if(this.searchType == 1) {
-                wx.navigateTo({
+                // 关闭当前页面跳转到别的页面
+                wx.redirectTo({
                     url: `../equipment-form/main?sensorNumber=${value}`
                 })
             }
             // 物联卡编号
             if(this.searchType == 2) {
-                wx.navigateTo({
+                wx.redirectTo({
                     url: `../equipment-form/main?cardNumber=${value}`
                 })
             }    

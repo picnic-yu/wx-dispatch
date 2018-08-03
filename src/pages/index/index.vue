@@ -57,10 +57,10 @@ export default {
 		dispatchCard
 	},
 	mounted(){
+		
+	},
+	onLoad:function(){
 		this.getList();
-		
-		const self = this;
-		
 	},
 	methods: {
 		refesh(){
