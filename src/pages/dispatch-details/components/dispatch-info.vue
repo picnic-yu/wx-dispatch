@@ -21,7 +21,7 @@
         </i-row>
         <i-row class='item'>
             <i-col span="9" i-class="col-class">期望派工时间:</i-col>
-            <i-col span="15" i-class="col-class">{{dispatchInfoData.fromType}}</i-col>
+            <i-col span="15" i-class="col-class">{{dispatchInfoData.expectTime}}</i-col>
         </i-row>
         <i-row class='item'>
             <i-col span="9" i-class="col-class">派工地址:</i-col>

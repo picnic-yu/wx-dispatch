@@ -81,7 +81,7 @@ export default {
 				})
 			}
 			
-			const url = `tokens/login?username=${this.userName}&password=${this.passWord}`
+			const url = `tokens/login?username=${this.userName}&password=${this.passWord}`;
 			getReq(url, (data) => {
 				console.log(data)
 				// 用户名或者密码错误处理
