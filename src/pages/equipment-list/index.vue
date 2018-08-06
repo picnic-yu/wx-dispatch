@@ -12,12 +12,7 @@ export default {
 	data () {
 		return {
 			equipmentList:[
-				{
-					equipmentNumber:'232332342323232323',
-					cardNumber:'2232232323323232',
-					sensorNumber:'32123233232323232'
-					
-				}
+	
 			],
 		}
 	},
@@ -27,13 +22,14 @@ export default {
 	mounted(){
 		
 	},
-	onLoad:function (options){
+	
+	onShow:function (options){
 
         wx.getStorage({
             key: 'equipmentList',
             success: (res) => {
 				this.equipmentList = res.data;
-				console.log(this.equipmentList);
+				console.log(this.equipmentList,'equipmentListequipmentListequipmentListequipmentList');
             } 
         })
     },
@@ -43,7 +39,7 @@ export default {
             wx.navigateTo({
   				url: `../equipment-form/main`
             })
-        },
+		},
 	}
 }
 </script>

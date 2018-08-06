@@ -63,6 +63,7 @@ export default {
 
     methods: {
         handleAddEquipment() {
+            wx.setStorageSync('equipmentIndex', null);
             wx.navigateTo({
   				url: '../equipment-form/main'
 			})

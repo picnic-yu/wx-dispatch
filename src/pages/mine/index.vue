@@ -1,7 +1,13 @@
 <template>
-	<div class="counter-warp">
-		<i-button @click='handleSignOut' type='primary'>退出登陆</i-button>
-	</div>
+    <section>
+        <section class="counter-warp">
+            
+        </section>
+        <section class="submit-btn">
+		    <i-button @click='handleSignOut' type='primary'>退出登陆</i-button>
+	    </section>
+    </section>
+	
 </template>
 
 <script>
@@ -22,8 +28,12 @@ export default {
 </script>
 
 <style>
+.submit-btn{
+    height:8.5vh;
+}
 .counter-warp {
-  text-align: center;
-  margin-top: 70rpx;
+    height:88vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 </style>

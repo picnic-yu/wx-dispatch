@@ -7,10 +7,10 @@
                         设备序列号:
                         <span class='required-icon'>*</span>
                     </i-col>
-                    <i-col span="16">
+                    <i-col span="16" i-class="input-wrap">
                         <i-input 
                             :value="saveParam.equipmentNumber" 
-                            mode="wrapped" 
+                            i-class='iview-input' 
                             @change='equipmentNumberChange'
                             placeholder="请输入设备序列号" 
                         />
@@ -23,10 +23,10 @@
                         设备制造商:
                         <span class='required-icon'>*</span>
                     </i-col>
-                    <i-col span="16" >
+                    <i-col span="16" i-class="input-wrap">
                         <i-input 
                             :value="saveParam.manufacturerName" 
-                            mode="wrapped" 
+                            i-class='iview-input' 
                             @change = 'manufacturerNameChange'
                             placeholder="请输入设备制造商" 
                         />
@@ -39,10 +39,10 @@
                         制造商简称:
                         <span class='required-icon'>*</span>
                     </i-col>
-                    <i-col span="16" >
+                    <i-col span="16" i-class="input-wrap">
                         <i-input 
                             :value="saveParam.manufacturerSimpleName" 
-                            mode="wrapped"
+                            i-class='iview-input'
                             @change='manufacturerSimpleNameChange' 
                             placeholder="请输入制造商简称" 
                         />
@@ -55,11 +55,11 @@
                         传感器编号:
                         <span class='required-icon'>*</span>
                     </i-col>
-                    <i-col span="16" >
+                    <i-col span="16" i-class="input-wrap">
                         <i-input @click='handleSearch(1,saveParam.sensorNumber)'
                             :value="saveParam.sensorNumber" 
                             disabled='false'
-                            mode="wrapped"
+                            i-class='iview-input'
                             placeholder="请选择传感器编号" 
                         />
                     </i-col>
@@ -71,11 +71,11 @@
                         物联卡编号:
                         <span class='required-icon'>*</span>
                     </i-col>
-                    <i-col span="16" >
+                    <i-col span="16" i-class="input-wrap">
                         <i-input 
                             @click='handleSearch(2,saveParam.cardNumber)'
                             :value="saveParam.cardNumber" 
-                            mode="wrapped"
+                            i-class='iview-input'
                             disabled='false'
                             placeholder="请选择物联卡编号" 
                         />
@@ -87,10 +87,10 @@
                     <i-col span="8" i-class="col-class">
                         工厂名称:
                     </i-col>
-                    <i-col span="16" >
+                    <i-col span="16" i-class="input-wrap">
                         <i-input 
                             :value="saveParam.factoryName" 
-                            mode="wrapped" 
+                            i-class='iview-input'
                             @change='factoryNameChange'
                             placeholder="请输入工厂名称" 
                         />
@@ -103,11 +103,11 @@
                     <i-col span="8" i-class="col-class">
                         设备名称:
                     </i-col>
-                    <i-col span="16" >
+                    <i-col span="16" i-class="input-wrap">
                         <i-input 
                             @click='openEquipmentnameModel'
                             :value="saveParam.equipmentNameText" 
-                            mode="wrapped"
+                            i-class='iview-input'
                             disabled='false'
                             placeholder="请输入设备名称" 
                         />
@@ -119,10 +119,10 @@
                     <i-col span="8" i-class="col-class">
                         设备型号:
                     </i-col>
-                    <i-col span="16" >
+                    <i-col span="16" i-class="input-wrap">
                         <i-input 
                             :value="saveParam.equipmentModel" 
-                            mode="wrapped"
+                            i-class='iview-input'
                             @change='equipmentModelChange' 
                             placeholder="请输入设备型号" 
                         />
@@ -135,10 +135,10 @@
                         系统厂牌:
                         <span class='required-icon'>*</span>
                     </i-col>
-                    <i-col span="16" >
+                    <i-col span="16" i-class="input-wrap">
                         <i-input 
                             :value="saveParam.systemLabel" 
-                            mode="wrapped"
+                            i-class='iview-input'
                             @change='systemLabelChange' 
                             placeholder="请输入系统厂牌" 
                         />
@@ -150,10 +150,10 @@
                     <i-col span="8" i-class="col-class">
                         系统版本:
                     </i-col>
-                    <i-col span="16" >
+                    <i-col span="16" i-class="input-wrap">
                         <i-input 
                             :value="saveParam.systemVersion" 
-                            mode="wrapped"
+                            i-class='iview-input'
                             @change='systemVersionChange' 
                             placeholder="请输入系统版本" 
                         />
@@ -166,10 +166,10 @@
                     <i-col span="8" i-class="col-class">
                         IP地址:
                     </i-col>
-                    <i-col span="16" >
+                    <i-col span="16" i-class="input-wrap">
                         <i-input 
                             :value="saveParam.ipAddress" 
-                            mode="wrapped"
+                            i-class='iview-input'
                             @change='ipAddressChange' 
                             placeholder="请输入IP地址" 
                         />
@@ -181,10 +181,10 @@
                     <i-col span="8" i-class="col-class">
                         端口号:
                     </i-col>
-                    <i-col span="16" >
+                    <i-col span="16" i-class="input-wrap">
                         <i-input 
                             :value="saveParam.portNumber" 
-                            mode="wrapped"
+                            i-class='iview-input'
                             @change='portNumberChange' 
                             placeholder="请输入端口号" 
                         />
@@ -196,10 +196,10 @@
                     <i-col span="8" i-class="col-class">
                         用户:
                     </i-col>
-                    <i-col span="16" >
+                    <i-col span="16" i-class="input-wrap">
                         <i-input 
+                            i-class='iview-input'
                             :value="saveParam.userName" 
-                            mode="wrapped"
                             @change='userNameChange' 
                             placeholder="请输入用户" 
                         />
@@ -211,10 +211,10 @@
                     <i-col span="8" i-class="col-class">
                         密码:
                     </i-col>
-                    <i-col span="16" >
-                        <i-input 
+                    <i-col span="16" i-class="input-wrap">
+                        <i-input  
                             :value="saveParam.userPassword" 
-                            mode="wrapped"
+                            i-class='iview-input'
                             @change='userPasswordChange' 
                             placeholder="请输入密码" 
                         />
@@ -425,9 +425,13 @@ export default {
                 this.equipmentList[this.equipmentIndex] = this.saveParam;
             }else{
                 this.equipmentList.push(this.saveParam); 
+                this.equipmentIndex = this.equipmentList.length - 1;
             }
             wx.setStorageSync('equipmentList', this.equipmentList);
             wx.setStorageSync('equipmentIndex', this.equipmentIndex);
+            wx.navigateTo({
+  				url: '../parameter-detection/main'
+			})
         },
         // 制造商简称
         manufacturerSimpleNameChange(e){
@@ -483,12 +487,34 @@ export default {
         }
     },
     onLoad:function (options){
-
-        
         this.equipmentList = wx.getStorageSync('equipmentList');
         this.equipmentIndex = wx.getStorageSync('equipmentIndex');
+        console.log(this.equipmentIndex)
         try{
-            Object.assign(this.saveParam,this.equipmentList[this.equipmentIndex]);
+            if(this.equipmentIndex !== null){
+                Object.assign(this.saveParam,this.equipmentList[this.equipmentIndex]);
+            }else{
+                if(!options.sensorNumber && !options.cardNumber) {
+                    this.saveParam =  {
+                        equipmentNumber:'',//设备序列号
+                        factoryName:'',//工厂名称
+                        manufacturerName:'',//设备制造商
+                        manufacturerSimpleName:'',//制造商简称
+                        equipmentName:'001',//设备名称code
+                        equipmentNameText:'CNC加工中心',//设备名称
+                        equipmentModel: '',//设备型号
+                        systemLabel:'',//系统厂牌
+                        systemVersion:'',//系统版本
+                        sensorNumber:'',//传感器编号
+                        cardNumber:'',//物联卡编号
+                        ipAddress:'',//IP地址
+                        portNumber:'',//端口号
+                        userName:'',//用户
+                        userPassword:'',//密码
+                        equipmentImage:'/static/images/upload.png',
+                    }
+                }
+            }
         }catch(e){
             console.log(e);
         }
@@ -504,6 +530,17 @@ export default {
 </script>
 
 <style>
+.input-wrap{
+    padding-right:10px;
+}
+.iview-input{
+    border:1px solid #e6e6e6;
+    border-radius:5px;
+
+}
+
+
+
 .form-wrap{
     height:88vh;
     overflow-x: hidden;
@@ -520,7 +557,8 @@ export default {
     line-height: 8.5vh;
 }
 .item-wrap{
-    padding-left:3vw;
+    padding:5px 0 5px 3vw;
+    /* padding-left:3vw; */
 }
 .required-icon{
     height:8.5vh;
