@@ -1,24 +1,27 @@
 <template>
     <section>
         <section class="counter-warp">
-            <div class='image-wrap'>
-                <div class="text">检测PING</div>
+            <div class='image-wrap' @click='handlePing'>
+                <div class="text">{{pingText}}</div>
                 
-                <image @click='handlePing' src='/static/images/step1.png'/>
+                <image  src='/static/images/step1.png'/>
             </div>
             <div class="arrow">
                 <image src='/static/images/arrow1.png'/>
             </div>
-            <div class='image-wrap'>
+            <div class='image-wrap' @click='handleTelnet'>
                 <div class="text">检测TELNET</div>
-                <image src='/static/images/step2.png'/>
+                <image  src='/static/images/step2.png'/>
             </div>
             <div class="arrow">
                 <image src='/static/images/arrow2.png'/>
             </div>
-            <div class='image-wrap'>
+            <div class='image-wrap' @click='handleSnapshot'>
                 <div class="text">设备参数回传</div>
-                <image @click='handleSnapshot' src='/static/images/step3.jpg'/>
+                <image  src='/static/images/step3.jpg'/>
+            </div>
+            <div class='text-wrap'>
+                {{snapShotData}}
             </div>
         </section>
         <section class="submit-btn">
@@ -37,24 +40,35 @@ export default {
     onLoad:function (options){
         this.equipmentList = wx.getStorageSync('equipmentList');
         this.equipmentIndex = wx.getStorageSync('equipmentIndex');
-        console.log(this.equipmentIndex)
-        const searchNumber = this.equipmentList[this.equipmentIndex].sensorNumber;
-        const cardIp = this.equipmentList[this.equipmentIndex].ipAddress;
-        this.pingUrl = `sensors/ping/${searchNumber}/${cardIp}`;
+        const sensorNumber = this.equipmentList[this.equipmentIndex].sensorNumber;
+        const cardNumber = this.equipmentList[this.equipmentIndex].cardNumber;
+        this.pingUrl = `sensors/ping/${sensorNumber}/${cardNumber}`;
+        this.telnetUrl = `sensors/telnet/${sensorNumber}/${cardNumber}`;
     },
     data(){
         return{
             pingUrl:'',
+            telnetUrl:'',
             equipmentList:[],
-            equipmentIndex:null
+            equipmentIndex:null,
+            stepStatus:0,
+            pingText:'检测PING',
+            telnetText:'检测TELNET',
+            snapShotData:''
         }
     },
   	methods: {
 		// 退出登陆，页面跳转，清除数据缓存
 		handleSubmit(){
+            if(this.stepStatus !== 2 ){
+                return wx.showToast({
+                    title: "PING和TELNET后才可提交",
+                    duration: 2000,
+                    icon:'none'
+                })
+            }
             const url = `equipmentInfo/`
             postReq(url,this.equipmentList[this.equipmentIndex],(data) => {
-                console.log(data);
                 if(data.code == 201){
                     wx.showToast({
                         title: '请求成功',
@@ -83,15 +97,35 @@ export default {
         },
         handlePing(){
             getReq(this.pingUrl, (data) => {
-                console.log(data)
-                // data.code == 200 ? this.dispatchInfoData = data.content: this.dispatchInfoData = {};
+                console.log(data,'ping')
+                // success
+                if(data.code == 100){
+                    this.stepStatus = 1;
+                    this.pingText = '检测PING成功';
+                }else{
+                    this.stepStatus = 0;
+                    this.pingText = '检测PING失败';
+                }
+            });
+        },
+        handleTelnet(){
+            if(this.stepStatus !== 1) return;
+            getReq(this.telnetUrl, (data) => {
+                console.log(data,'telnet')
+                if(data.code == 100){
+                    this.telnetText = '检测TELNET成功';
+                    this.stepStatus = 2;
+                }else{
+                    this.telnetText = '检测TELNET失败';
+                    this.stepStatus = 1;
+                }
             });
         },
         handleSnapshot(){
             const url =`equipmentInfo/${this.equipmentList[this.equipmentIndex].equipmentNumber}/snapshot`;
             getReq(url, (data) => {
+                this.snapShotData =  JSON.stringify(data);
                 console.log(data)
-                // data.code == 200 ? this.dispatchInfoData = data.content: this.dispatchInfoData = {};
             });
 		}
   	}
@@ -136,5 +170,8 @@ export default {
     width:100px;
     height:100px;
     margin:15px 50px;;
+}
+.text-wrap{
+    padding-top:30px;
 }
 </style>

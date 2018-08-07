@@ -59,13 +59,7 @@ export default {
 			this.userName = e.target.detail.value;
 		},
 		handleLogin(){
-			console.log(this.userName)
 			const self =this;
-			this.userName = 'levy.li';
-			this.userName = 'sean.liu';
-			this.userName = 'srr';
-			this.userName = 'chen';
-			this.passWord = 'admin'
 			if(!this.userName){
 				return wx.showToast({
 					title: '请输入用户名',
