@@ -2,21 +2,24 @@
     <section>
         <section class="counter-warp">
             <div class='image-wrap'>
-                <image @click='handlePing' src='/static/images/step3.jpg'/>
-            </div>
-            <div class="arrow">
-
-            </div>
-            <div class='image-wrap'>
-                <image src='/static/images/step3.jpg'/>
-            </div>
-            <div class="arrow">
+                <div class="text">检测PING</div>
                 
+                <image @click='handlePing' src='/static/images/step1.png'/>
+            </div>
+            <div class="arrow">
+                <image src='/static/images/arrow1.png'/>
             </div>
             <div class='image-wrap'>
+                <div class="text">检测TELNET</div>
+                <image src='/static/images/step2.png'/>
+            </div>
+            <div class="arrow">
+                <image src='/static/images/arrow2.png'/>
+            </div>
+            <div class='image-wrap'>
+                <div class="text">设备参数回传</div>
                 <image @click='handleSnapshot' src='/static/images/step3.jpg'/>
             </div>
-            
         </section>
         <section class="submit-btn">
 		    <i-button @click='handleSubmit' type='primary'>提交</i-button>
@@ -107,8 +110,18 @@ export default {
 .image-wrap{
     width:200px;
     height:200px;
+    position: relative;
     text-align: center;
     line-height: 200px;
+}
+.text{
+    position: absolute;
+    top: 0;
+    left:0;
+    text-align: center;
+    line-height: 200px;
+    width:200px;
+    height:200px;
 }
 .image-wrap image{
     width:200px;
@@ -116,6 +129,12 @@ export default {
     margin:15px;
 }
 .arrow{
-    height:40vh;
+    width:200px;
+    height:100px;
+}
+.arrow image{
+    width:100px;
+    height:100px;
+    margin:15px 50px;;
 }
 </style>
