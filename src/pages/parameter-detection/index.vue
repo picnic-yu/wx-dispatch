@@ -10,7 +10,7 @@
                 <image src='/static/images/arrow1.png'/>
             </div>
             <div class='image-wrap' @click='handleTelnet'>
-                <div class="text">检测TELNET</div>
+                <div class="text">{{pingText}}</div>
                 <image  src='/static/images/step2.png'/>
             </div>
             <div class="arrow">
@@ -152,6 +152,7 @@ export default {
     position: absolute;
     top: 0;
     left:0;
+    color:#fff;
     text-align: center;
     line-height: 200px;
     width:200px;
