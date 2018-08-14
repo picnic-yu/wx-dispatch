@@ -1,23 +1,31 @@
 <template>
 	<section>
-		<view class="container" style="height:100vh;padding:0rpx">
-		<!--垂直滚动，这里必须设置高度-->
-			<!-- <i-spin custom v-if='refreshLoading'>
-				<i-icon type="refresh" size="20" i-class="icon-load"></i-icon>
-				<view>Loading</view>
-			</i-spin> -->
-			<scroll-view  scroll-y="true" style="height:100vh;width:100%" 
-				class="list" @scrolltolower="loadMore" @scrolltoupper="refesh"  bindscroll="scroll">
-				
-				<section class="item" v-for="(item, index) in dispatchList " :key='index'>
-					<div class="w" @click='handleToDispatchDetails(item)'>
-						<dispatch-card :dispatchInfo='item' ></dispatch-card>
-					</div>
-					
-				</section>
-			</scroll-view>
+		<section v-if='external'>
+				<equipment-form></equipment-form>
+			</section>
+		<view  v-if='!external' class="container" style="height:100vh;padding:0rpx">
+			<!-- 外部用户显示内容 -->
 			
-			<!-- <i-spin custom v-if='lodemoreLoading'>加载中...</i-spin> -->
+			<section>
+				<!--垂直滚动，这里必须设置高度-->
+				<!-- <i-spin custom v-if='refreshLoading'>
+					<i-icon type="refresh" size="20" i-class="icon-load"></i-icon>
+					<view>Loading</view>
+				</i-spin> -->
+				<scroll-view  scroll-y="true" style="height:100vh;width:100%" 
+					class="list" @scrolltolower="loadMore" @scrolltoupper="refesh"  bindscroll="scroll">
+					
+					<section class="item" v-for="(item, index) in dispatchList " :key='index'>
+						<div class="w" @click='handleToDispatchDetails(item)'>
+							<dispatch-card :dispatchInfo='item' ></dispatch-card>
+						</div>
+						
+					</section>
+				</scroll-view>
+				
+				<!-- <i-spin custom v-if='lodemoreLoading'>加载中...</i-spin> -->
+			</section>
+		
 			
 
 		</view>
@@ -27,6 +35,7 @@
 <script>
 import { postReq } from '../../utils/request.js';
 import dispatchCard from './components/dispatch-card';
+import equipmentForm from './components/equipment-form';
 import lookupUtils from '../../utils/lookupUtils';
 import { lookUpdata } from '../../utils/lookup'
 const url = `dispatch/order/mine/pg`;
@@ -50,17 +59,22 @@ export default {
 			postParam:{
 				pageNumber:0,
 				pageSize:10
-			}
+			},
+			external:false
 		}
 	},
 	components: {
-		dispatchCard
+		dispatchCard,
+		equipmentForm
 	},
 	mounted(){
 		
 	},
 	onLoad:function(){
-		this.getList();
+		this.external = wx.getStorageSync('external');
+		if(!this.external){
+			this.getList();
+		}
 	},
 	methods: {
 		refesh(){
@@ -97,7 +111,6 @@ export default {
 		loadMore(){
 			this.lodemoreLoading = true;
 			this.getList(1)
-			console.log('jiazai')
 		}
 	}
 }

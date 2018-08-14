@@ -3,11 +3,13 @@ export default {
   created () {
     // 调用API从本地缓存中获取数据
     const logs = wx.getStorageSync('logs') || []
+    const external = wx.getStorageSync('external') || false;
     const equipmentList = wx.getStorageSync('equipmentList') || []
     const equipmentIndex = wx.getStorageSync('equipmentIndex') || null
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
     wx.setStorageSync('equipmentList', equipmentList);
+    wx.setStorageSync('external', external);
     wx.setStorageSync('equipmentIndex', equipmentIndex);
 
     console.log('app created and cache logs by setStorageSync')

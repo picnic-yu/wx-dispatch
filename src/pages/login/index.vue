@@ -60,6 +60,8 @@ export default {
 		},
 		handleLogin(){
 			const self =this;
+			this.userName = 'cby';
+			this.passWord = 'admin';
 			if(!this.userName){
 				return wx.showToast({
 					title: '请输入用户名',
@@ -88,6 +90,7 @@ export default {
 				}
 				if(data.code == 200){
 					const token = `${data.content.userId}_${data.content.token}`
+					wx.setStorageSync('external', data.content.external);
 					wx.setStorage({
 						key:"token",
 						data:token
