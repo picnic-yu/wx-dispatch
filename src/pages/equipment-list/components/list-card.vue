@@ -4,10 +4,10 @@
             <div class="left">设备序列号:</div>
             <div class="right">{{equipmentItem.equipmentNumber}}</div>
         </div>
-        <div class="item">
+        <!-- <div class="item">
             <div class="left">客户名称:</div>
             <div class="right">{{equipmentItem.customerCompany.companyName}}</div>
-        </div>
+        </div> -->
         <div class="item">
             <div class="left">设备型号:</div>
             <div class="right">{{equipmentItem.equipmentModel}}</div>

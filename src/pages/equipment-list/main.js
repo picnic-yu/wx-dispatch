@@ -6,13 +6,14 @@ app.$mount()
 
 export default {
 	config: {
-		navigationBarTitleText: '设备列表'
+		navigationBarTitleText: '设备列表',
+		usingComponents:{
+			'i-page':'../../../static/iview/page/index',
+			'i-panel':'../../../static/iview/panel/index',
+			"i-row": "../../../static/iview/row/index",
+			"i-icon": "../../../static/iview/icon/index",
+			"i-col": "../../../static/iview/col/index"
+		}
 	},
-	usingComponents:{
-		'i-page':'../../../static/iview/page/index',
-		'i-panel':'../../../static/iview/panel/index',
-		"i-row": "../../../static/iview/row/index",
-		"i-icon": "../../../static/iview/icon/index",
-		"i-col": "../../../static/iview/col/index"
-	}
+	
 }

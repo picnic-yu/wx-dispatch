@@ -10,6 +10,7 @@ export default {
             "i-row": "../../../static/iview/row/index",
             "i-col": "../../../static/iview/col/index",
             "i-modal": "../../../static/iview/modal/index",
+            'i-page':'../../../static/iview/page/index',
             'i-button':'../../../static/iview/button/index'
 		},
 		navigationBarTitleText: '添加设备'

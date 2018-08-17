@@ -129,7 +129,7 @@
                             <i-input 
                                 :value="equipmentInfo.ip" 
                                 i-class='equipment-input'
-                                @change='ipChange' 
+                                @change='ipAddressChange' 
                                 placeholder="请输入IP地址" 
                             />
                         </i-col>
@@ -181,11 +181,10 @@
 </template>
 
 <script>
-import lookupUtils from '../../../utils/lookupUtils';
-import { lookUpdata } from '../../../utils/lookup';
-import {rootDocment, rootUrl} from '../../../utils/request.js';
+import lookupUtils from '../../utils/lookupUtils.js';
+import { lookUpdata } from '../../utils/lookup.js';
+import {rootDocment, rootUrl,putReq,getReq} from '../../utils/request.js';
 import searchCompany from './search-company';
-import { postReq } from '../../../utils/request.js';
 const transformData = (item) => {
 		//DispatchTypeLookup 派工类型
     lookupUtils.transformData(
@@ -199,6 +198,25 @@ const transformData = (item) => {
 export default {
 	computed: {
     	
+    },
+    onLoad: function (options) {
+        if(options.equipmentId){
+            const url = `external/${options.equipmentId}`
+            getReq(url, (data) => {
+                if(data.code == 200){
+                    const id = data.content.id;
+                    Object.assign(this.equipmentInfo,data.content.customerCompany,data.content,{id});
+                    this.equipmentInfo.customerCompanyId = data.content.customerCompany.id;
+                    this.equipmentInfo.imei = '3333333'
+                    console.log(this.equipmentInfo,'equipment-input')
+                }else{
+
+                }
+                    console.log(data)
+                    
+            })
+        }
+        
     },
     data() {
         return {
@@ -229,10 +247,7 @@ export default {
         
     },
     props: {
-        hideForm:{
-            type:Boolean,
-            default:false
-        }
+        
     },
   	methods: {
         choseImage(){
@@ -331,7 +346,7 @@ export default {
 					icon:'none'
 				})
             }
-            if(!this.equipmentInfo.IMEI){
+            if(!this.equipmentInfo.imei){
 				return wx.showToast({
 					title: '请扫描IMEI',
 					duration: 2000,
@@ -355,7 +370,7 @@ export default {
 
             // 下面处理本地设备列表数据
             const url ='external/';
-            postReq(url, this.equipmentInfo, (data) => {
+            putReq(url, this.equipmentInfo, (data) => {
                 if(data.code == 200){
                     wx.switchTab({
 						url:'../equipment-list/main'
@@ -385,7 +400,7 @@ export default {
             this.equipmentInfo.systemVersion = e.target.detail.value;
         },
         // ip地址
-        ipChange(e) {
+        ipAddressChange(e) {
             this.equipmentInfo.ip = e.target.detail.value;
         },
         portChange(e){
@@ -413,24 +428,7 @@ export default {
 		searchCompany
 	},
     watch:{
-        hideForm(val){
-            if(val){
-                this.equipmentInfo =  {
-                    equipmentNumber:'',//设备序列号
-                    companyName:'',//客户名称
-                    customerCompanyId:'',//客户id
-                    equipmentName:'001',//设备名称code
-                    equipmentNameText:'CNC加工中心',//设备名称
-                    equipmentModel: '',//设备型号
-                    systemLabel:'',//系统厂牌
-                    systemVersion:'',//系统版本
-                    imei:'',//IMEI
-                    ip:'',//IP地址
-                    port:'',//端口号
-                    equipmentImage:'/static/images/upload.png',
-                }
-            }
-        }
+        
     }
 }
 </script>

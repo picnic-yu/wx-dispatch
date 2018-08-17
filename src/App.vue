@@ -34,4 +34,11 @@ export default {
   -webkit-transition: width 2s;
   -o-transition: width 2s;
 }
+.nodata{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height:50vh;
+}
 </style>

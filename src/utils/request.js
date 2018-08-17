@@ -17,7 +17,6 @@ const goToLogin = (status) => {
 export const  getReq =(url, cb)=> {
     try {
         var token = wx.getStorageSync('token');
-        console.log(token,'token')
         if(token){
             header.authorization = token;
         }
@@ -28,8 +27,6 @@ export const  getReq =(url, cb)=> {
     wx.showLoading({
         title: '加载中',
     })
-    console.log("header=="),
-    console.log(header)
     wx.request({
         url: rootDocment + url,
         header: header,
@@ -54,7 +51,6 @@ export const  getReq =(url, cb)=> {
 export const  postReq = (url, data, cb,flag=false) => {
     try {
         var token = wx.getStorageSync('token');
-        console.log(token,'token')
         if(token){
             header.authorization = token;
         }
@@ -74,7 +70,6 @@ export const  postReq = (url, data, cb,flag=false) => {
         data: data,
         method: 'Post',
         success: function (res) {
-            console.log(res.statusCode)
             goToLogin(res.statusCode);
             
             wx.hideLoading();
@@ -90,10 +85,42 @@ export const  postReq = (url, data, cb,flag=false) => {
             return typeof cb == "function" && cb(false)
         }
     })
+}
+export const  putReq = (url, data, cb,flag=false) => {
+    try {
+        var token = wx.getStorageSync('token');
+        if(token){
+            header.authorization = token;
+        }
+        
+    } catch (e) {
+        // Do something when catch error
+    }
+    if(!flag){
+        wx.showLoading({
+            title: '加载中',
+        })
+    }
     
-
-    console.log("header==")
-    console.log(header)
-
-    
+    wx.request({
+        url: rootDocment + url,
+        header: header,
+        data: data,
+        method: 'Put',
+        success: function (res) {
+            goToLogin(res.statusCode);
+            
+            wx.hideLoading();
+            return typeof cb == "function" && cb(res.data)
+        },
+        fail: function () {
+            wx.hideLoading();
+            wx.showModal({
+                title: '网络错误',
+                content: '网络出错，请刷新重试',
+                showCancel: false
+            })
+            return typeof cb == "function" && cb(false)
+        }
+    })
 }
