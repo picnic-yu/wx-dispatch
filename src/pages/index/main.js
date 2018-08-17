@@ -12,7 +12,9 @@ export default {
             "i-row": "../../../static/iview/row/index",
             "i-col": "../../../static/iview/col/index",
             'i-input':'../../../static/iview/input/index',
-            "i-modal": "../../../static/iview/modal/index"
+            "i-modal": "../../../static/iview/modal/index",
+            "i-cell-group": "../../../static/iview/cell-group/index",
+            "i-cell": "../../../static/iview/cell/index"
         },
         navigationBarTitleText:'我的派工单',
     }

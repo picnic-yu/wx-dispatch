@@ -1,8 +1,8 @@
 <template>
 	<section>
 		<section v-if='external'>
-				<equipment-form></equipment-form>
-			</section>
+			<equipment-form :hideForm='hideForm'></equipment-form>
+		</section>
 		<view  v-if='!external' class="container" style="height:100vh;padding:0rpx">
 			<!-- 外部用户显示内容 -->
 			
@@ -12,7 +12,7 @@
 					<i-icon type="refresh" size="20" i-class="icon-load"></i-icon>
 					<view>Loading</view>
 				</i-spin> -->
-				<scroll-view  scroll-y="true" style="height:100vh;width:100%" 
+				<scroll-view  scroll-y="true" style="height:100vh;width:100vw" 
 					class="list" @scrolltolower="loadMore" @scrolltoupper="refesh"  bindscroll="scroll">
 					
 					<section class="item" v-for="(item, index) in dispatchList " :key='index'>
@@ -60,7 +60,8 @@ export default {
 				pageNumber:0,
 				pageSize:10
 			},
-			external:false
+			external:false,
+			hideForm:false
 		}
 	},
 	components: {
@@ -70,11 +71,16 @@ export default {
 	mounted(){
 		
 	},
-	onLoad:function(){
+	onShow:function(option){
 		this.external = wx.getStorageSync('external');
 		if(!this.external){
 			this.getList();
 		}
+		this.hideForm = false;
+		console.log(option,'option')
+	},
+	onHide:() => {
+		this.hideForm = true;
 	},
 	methods: {
 		refesh(){
