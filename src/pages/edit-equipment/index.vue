@@ -207,7 +207,11 @@ export default {
                     const id = data.content.id;
                     Object.assign(this.equipmentInfo,data.content.customerCompany,data.content,{id});
                     this.equipmentInfo.customerCompanyId = data.content.customerCompany.id;
-                    this.equipmentInfo.imei = '3333333'
+                    this.equipmentInfo.imei = '3333333';
+                    transformData(this.equipmentInfo);
+                    if(!this.equipmentInfo.equipmentImage){
+                        this.equipmentInfo.equipmentImage = '/static/images/upload.png';
+                    }
                     console.log(this.equipmentInfo,'equipment-input')
                 }else{
 
