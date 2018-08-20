@@ -4,13 +4,18 @@
             <div class="left">设备序列号:</div>
             <div class="right">{{equipmentItem.equipmentNumber}}</div>
         </div>
-        <!-- <div class="item">
-            <div class="left">客户名称:</div>
-            <div class="right">{{equipmentItem.customerCompany.companyName}}</div>
-        </div> -->
+        
         <div class="item">
             <div class="left">设备型号:</div>
             <div class="right">{{equipmentItem.equipmentModel}}</div>
+        </div>
+        <div class="item">
+            <div class="left">设备状态:</div>
+            <div class="right">{{equipmentItem.equipmentStatus}}</div>
+        </div>
+        <div class="item">
+            <div class="left">传感器:</div>
+            <div class="right">{{equipmentItem.sensorStatus}}</div>
         </div>
     </section>
 </template>
