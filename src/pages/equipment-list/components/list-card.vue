@@ -14,7 +14,7 @@
             <div class="right">{{equipmentItem.equipmentStatus}}</div>
         </div>
         <div class="item">
-            <div class="left">传感器:</div>
+            <div class="left">传感器状态:</div>
             <div class="right">{{equipmentItem.sensorStatus}}</div>
         </div>
     </section>
