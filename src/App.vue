@@ -41,4 +41,8 @@ export default {
   justify-content: center;
   min-height:50vh;
 }
+.modelitem{
+  height:4vh;
+  line-height: 4vh;
+}
 </style>

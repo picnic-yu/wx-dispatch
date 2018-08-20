@@ -169,7 +169,7 @@
             </div>
             <section>
                 <i-modal  :visible="equipmentnemeModelStatus" :show-ok='false' :show-cancel='false'>
-                    <view 
+                    <view class='modelitem'
                         @click="handleSelectEquipmentName(item)"
                         v-for="item in equipmentNameList " 
                         :key='item.code'>{{item.value}}</view>

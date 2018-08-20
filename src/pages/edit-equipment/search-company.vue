@@ -83,7 +83,7 @@ export default {
     overflow-x: hidden;
 }
 .input-wrap{
-    width:80%;
+    width:95%;
     margin: 0 auto;
     display:inline-block;
     border:1px solid #e6e6e6;
