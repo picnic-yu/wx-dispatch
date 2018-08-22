@@ -15,6 +15,7 @@
                             <i-input 
                                 :value="equipmentInfo.equipmentNumber" 
                                 i-class='equipment-input' 
+                                disabled='isDisabled'
                                 @change='equipmentNumberChange'
                                 placeholder="请输入设备序列号" 
                             />
@@ -81,6 +82,7 @@
                         <i-col span="16" i-class="input-wrap">
                             <i-input 
                                 :value="equipmentInfo.equipmentModel" 
+                                disabled='isDisabled'
                                 i-class='equipment-input'
                                 @change='equipmentModelChange' 
                                 placeholder="请输入设备型号" 
@@ -98,6 +100,7 @@
                             <i-input 
                                 :value="equipmentInfo.systemLabel" 
                                 i-class='equipment-input'
+                                disabled='isDisabled'
                                 @change='systemLabelChange' 
                                 placeholder="请输入系统厂牌" 
                             />
@@ -113,6 +116,7 @@
                             <i-input 
                                 :value="equipmentInfo.systemVersion" 
                                 i-class='equipment-input'
+                                disabled='isDisabled'
                                 @change='systemVersionChange' 
                                 placeholder="请输入系统版本" 
                             />
@@ -128,6 +132,7 @@
                         <i-col span="16" i-class="input-wrap">
                             <i-input 
                                 :value="equipmentInfo.ip" 
+                                disabled='isDisabled'
                                 i-class='equipment-input'
                                 @change='ipAddressChange' 
                                 placeholder="请输入IP地址" 
@@ -143,6 +148,7 @@
                         <i-col span="16" i-class="input-wrap">
                             <i-input 
                                 :value="equipmentInfo.port" 
+                                disabled='isDisabled'
                                 i-class='equipment-input'
                                 @change='portChange' 
                                 placeholder="请输入端口号" 
@@ -207,11 +213,14 @@ export default {
                     const id = data.content.id;
                     Object.assign(this.equipmentInfo,data.content.customerCompany,data.content,{id});
                     this.equipmentInfo.customerCompanyId = data.content.customerCompany.id;
-                    this.equipmentInfo.imei = '3333333';
+                    
                     transformData(this.equipmentInfo);
                     if(!this.equipmentInfo.equipmentImage){
                         this.equipmentInfo.equipmentImage = '/static/images/upload.png';
                     }
+                    if(this.equipmentInfo.equipmentStatus == 'CONFIRMED') {
+                        this.isDisabled = false;
+                    };
                     console.log(this.equipmentInfo,'equipment-input')
                 }else{
 
@@ -243,7 +252,8 @@ export default {
                
                 equipmentImage:'/static/images/upload.png',
             },
-            searchState:false
+            searchState:false,
+            isDisabled:true
         }
 
     },
@@ -255,6 +265,7 @@ export default {
     },
   	methods: {
         choseImage(){
+            if(this.equipmentInfo.equipmentStatus == 'CONFIRMED') return;
             const self =this;
             wx.chooseImage({
                 count: 1,
@@ -326,6 +337,7 @@ export default {
             })
         },
         openEquipmentnameModel(){
+            if(this.equipmentInfo.equipmentStatus == 'CONFIRMED') return;
             this.equipmentnemeModelStatus = true;
         },
         // 选择设备名称
@@ -411,14 +423,17 @@ export default {
             this.equipmentInfo.port = e.target.detail.value;
         },
         handleSearch(companyName){
+            if(this.equipmentInfo.equipmentStatus == 'CONFIRMED') return;
             this.searchState = true;
         },
         selectCompanyName(item){
+            
             Object.assign(this.equipmentInfo,{companyName:item.companyName,customerCompanyId:item.id});
             this.searchState = false;
         },
         // 扫描imei
         handleScan(){
+            if(this.equipmentInfo.equipmentStatus == 'CONFIRMED') return;
             wx.scanCode({
                 success: (res) => {
                     // 扫码成功后获取数据返回

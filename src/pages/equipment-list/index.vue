@@ -37,6 +37,25 @@
 import { postReq } from '../../utils/request.js';
 import equipmentCard from './components/equipment-card';
 import listCard from './components/list-card';
+import lookupUtils from '../../utils/lookupUtils';
+import { lookUpdata } from '../../utils/lookup'
+const url = `dispatch/order/mine/pg`;
+const transformListData = (item) => {
+	//设备状态equipmentStatusLookup
+	lookupUtils.transformData(
+		item,
+		lookUpdata.equipmentStatusLookup,
+		'equipmentStatus', 
+		'equipmentStatusText'
+	);
+	// 传感器状态sensorStatusLookup
+	lookupUtils.transformData(
+		item,
+		lookUpdata.sensorStatusLookup,
+		'sensorStatus', 
+		'sensorStatusText'
+	);
+};
 export default {
 	data () {
 		return {
@@ -86,6 +105,9 @@ export default {
 			postReq(url,this.externalParam,(data)=> {
 				if(data.code==200){
 					this.externaleQuipmentList = data.content.data;
+					this.externaleQuipmentList.forEach((item) => {
+						transformListData(item);
+					});
 					this.total = data.content.rowCount;
 	
 				}

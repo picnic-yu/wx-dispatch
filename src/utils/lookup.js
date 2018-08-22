@@ -74,5 +74,22 @@ export const lookUpdata = {
 			"code": "TRAINING",
 			"value": "培训"
 		}
+	],
+	"equipmentStatusLookup": [{
+			"code": "UNCONFIRMED",
+			"value": "待确认"
+		}, {
+			"code": "CONFIRMED",
+			"value": "已确认"
+		}
+	],
+	"sensorStatusLookup": [{
+			"code": "UNCONFIRMED",
+			"value": "待确认"
+		}, {
+			"code": "CONFIRMED",
+			"value": "已确认"
+		}
 	]
+	   
 }

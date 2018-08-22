@@ -11,11 +11,11 @@
         </div>
         <div class="item">
             <div class="left">设备状态:</div>
-            <div class="right">{{equipmentItem.equipmentStatus}}</div>
+            <div class="right">{{equipmentItem.equipmentStatusText}}</div>
         </div>
         <div class="item">
             <div class="left">传感器状态:</div>
-            <div class="right">{{equipmentItem.sensorStatus}}</div>
+            <div class="right">{{equipmentItem.sensorStatusText}}</div>
         </div>
     </section>
 </template>
