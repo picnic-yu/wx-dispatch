@@ -15,7 +15,7 @@ export default {
     window: {
 		backgroundTextStyle: 'light',
 		navigationBarBackgroundColor: '#1296db',
-		navigationBarTitleText: '派工助手',
+		navigationBarTitleText: '物联管家',
 		navigationBarTextStyle: 'black',
 	},
 	tabBar: {

@@ -1,6 +1,6 @@
 
-export const rootDocment = 'http://172.16.100.210:8083/management-api/';
-export const rootUrl = 'http://172.16.100.210:8083';
+export const rootDocment = 'https://manager.cloudkeeper.cn/management-api/';
+export const rootUrl = 'https://manager.cloudkeeper.cn';
 let header = {
   'authorization': '',
   'content-type': 'application/json'

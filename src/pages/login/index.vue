@@ -60,8 +60,8 @@ export default {
 		},
 		handleLogin(){
 			const self =this;
-			this.userName = 'cby';
-			this.passWord = 'admin';
+			// this.userName = 'cby';
+			// this.passWord = 'admin';
 			if(!this.userName){
 				return wx.showToast({
 					title: '请输入用户名',
