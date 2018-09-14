@@ -3,7 +3,7 @@
         <section v-if='searchState' >
             <search-company :customerName='equipmentInfo.companyName' @selectCompanyName='selectCompanyName'></search-company>
         </section>
-        <section class="counter-warp" v-if='!searchState'>
+        <section class="counter-warp" >
             <div class="form-wrap">
                 <div class='item-wrap'>
                     <i-row class="equipment-item">
@@ -29,12 +29,14 @@
                             <span class='required-icon'>*</span>
                         </i-col>
                         <i-col span="16" i-class="input-wrap">
-                            <i-input @click='handleSearch'
-                                :value="equipmentInfo.companyName" 
-                                disabled='false'
-                                i-class='equipment-input'
-                                placeholder="请选择客户" 
+                            <i-input 
+                                :value="equipmentInfo.factoryName" 
+                                i-class='equipment-input' 
+                                disabled='isDisabled'
+                                @change='factoryNameChange'
+                                placeholder="请输入客户" 
                             />
+                            
                         </i-col>
                     </i-row>
                 </div>
@@ -190,7 +192,7 @@
 import lookupUtils from '../../utils/lookupUtils.js';
 import { lookUpdata } from '../../utils/lookup.js';
 import {rootDocment, rootUrl,putReq,getReq} from '../../utils/request.js';
-import searchCompany from './search-company';
+
 const transformData = (item) => {
 		//DispatchTypeLookup 派工类型
     lookupUtils.transformData(
@@ -252,7 +254,6 @@ export default {
                
                 equipmentImage:'/static/images/upload.png',
             },
-            searchState:false,
             isDisabled:true
         }
 
@@ -355,9 +356,9 @@ export default {
 					icon:'none'
 				})
             }
-            if(!this.equipmentInfo.customerCompanyId){
+            if(!this.equipmentInfo.factoryName){
 				return wx.showToast({
-					title: '请选择客户',
+					title: '请输入客户',
 					duration: 2000,
 					icon:'none'
 				})
@@ -419,17 +420,11 @@ export default {
         ipAddressChange(e) {
             this.equipmentInfo.ip = e.target.detail.value;
         },
+        factoryNameChange(e){
+            this.equipmentInfo.factoryName = e.target.detail.value;
+        },
         portChange(e){
             this.equipmentInfo.port = e.target.detail.value;
-        },
-        handleSearch(companyName){
-            if(this.equipmentInfo.equipmentStatus == 'CONFIRMED') return;
-            this.searchState = true;
-        },
-        selectCompanyName(item){
-            
-            Object.assign(this.equipmentInfo,{companyName:item.companyName,customerCompanyId:item.id});
-            this.searchState = false;
         },
         // 扫描imei
         handleScan(){
@@ -444,7 +439,7 @@ export default {
         }
     },
     components: {
-		searchCompany
+		
 	},
     watch:{
         
