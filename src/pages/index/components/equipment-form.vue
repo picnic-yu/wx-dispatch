@@ -326,7 +326,7 @@ export default {
 					icon:'none'
 				})
             }
-            if(!this.equipmentInfo.IMEI){
+            if(!this.equipmentInfo.imei){
 				return wx.showToast({
 					title: '请扫描IMEI',
 					duration: 2000,
@@ -348,7 +348,7 @@ export default {
 				})
             }
 
-            // 下面处理本地设备列表数据
+            
             const url ='external/';
             postReq(url, this.equipmentInfo, (data) => {
                 if(data.code == 200){
@@ -356,7 +356,11 @@ export default {
 						url:'../equipment-list/main'
 					})
                 }else{
-
+                    return wx.showToast({
+                        title: '保存失败',
+                        duration: 2000,
+                        icon:'none'
+                    })
                 }
             });
         },

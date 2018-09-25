@@ -76,19 +76,29 @@ export const lookUpdata = {
 		}
 	],
 	"equipmentStatusLookup": [{
-			"code": "UNCONFIRMED",
-			"value": "待确认"
-		}, {
+			"code": "PENDING",
+			"value": "待验证"
+		},
+		{
+			"code": "DISMISSED",
+			"value": "已驳回"
+		},
+		{
 			"code": "CONFIRMED",
-			"value": "已确认"
+			"value": "验证通过"
 		}
 	],
 	"sensorStatusLookup": [{
-			"code": "UNCONFIRMED",
-			"value": "待确认"
-		}, {
+			"code": "PENDING",
+			"value": "待验证"
+		},
+		{
+			"code": "DISMISSED",
+			"value": "已驳回"
+		},
+		{
 			"code": "CONFIRMED",
-			"value": "已确认"
+			"value": "验证通过"
 		}
 	]
 	   
