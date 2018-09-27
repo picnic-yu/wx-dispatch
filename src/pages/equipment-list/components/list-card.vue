@@ -14,8 +14,8 @@
             <div class="right">{{equipmentItem.equipmentStatusText}}</div>
         </div>
         <div class="item">
-            <div class="left">传感器状态:</div>
-            <div class="right">{{equipmentItem.sensorStatusText}}</div>
+            <div class="left">物联卡状态:</div>
+            <div class="right">{{equipmentItem.iotCardStatusText}}</div>
         </div>
     </section>
 </template>

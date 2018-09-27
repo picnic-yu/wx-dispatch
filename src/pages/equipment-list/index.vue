@@ -52,8 +52,8 @@ const transformListData = (item) => {
 	lookupUtils.transformData(
 		item,
 		lookUpdata.sensorStatusLookup,
-		'sensorStatus', 
-		'sensorStatusText'
+		'iotCardStatus', 
+		'iotCardStatusText'
 	);
 };
 export default {
