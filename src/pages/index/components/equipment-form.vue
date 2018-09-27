@@ -1,158 +1,68 @@
 <template>
     <section>
         <section class="counter-warp" >
+           
             <div class="form-wrap">
-                <div class='item-wrap'>
-                    <i-row class="equipment-item">
-                        <i-col span="8" i-class="col-class">
-                            设备序列号:
-                            <span class='required-icon'>*</span>
-                        </i-col>
-                        <i-col span="16" i-class="input-wrap">
-                            <i-input 
-                                :value="equipmentInfo.equipmentNumber" 
-                                i-class='equipment-input' 
-                                @change='equipmentNumberChange'
-                                placeholder="请输入设备序列号" 
-                            />
-                        </i-col>
-                    </i-row>
-                </div>
-                <div class='item-wrap'>
-                    <i-row class="equipment-item">
-                        <i-col span="8" i-class="col-class">
-                            客户名称:
-                            <span class='required-icon'>*</span>
-                        </i-col>
-                        <i-col span="16" i-class="input-wrap">
-                             <i-input 
-                                :value="equipmentInfo.factoryName" 
-                                i-class='equipment-input' 
-                                @change='factoryNameChange'
-                                placeholder="请输入客户" 
-                            />
-                        </i-col>
-                    </i-row>
-                </div>
-                <div class='item-wrap'>
-                    <i-row class="equipment-item">
-                        <i-col span="8" i-class="col-class">
-                            设备名称:
-                        </i-col>
-                        <i-col span="16" i-class="input-wrap">
-                            <i-input 
-                                @click='openEquipmentnameModel'
-                                :value="equipmentInfo.equipmentNameText" 
-                                i-class='equipment-input'
-                                disabled='false'
-                                placeholder="请输入设备名称" 
-                            />
-                        </i-col>
-                    </i-row>
-                </div>
-                
-                
-                <div class='item-wrap'>
-                    <i-row class="equipment-item">
-                        <i-col span="8" i-class="col-class">
-                            IMEI:
-                            <span class='required-icon'>*</span>
-                        </i-col>
-                        <i-col span="16" i-class="input-wrap">
-                            <i-input @click='handleScan'
-                                :value="equipmentInfo.imei" 
-                                disabled='false'
-                                i-class='equipment-input'
-                                placeholder="请扫描IMEI" 
-                            />
-                        </i-col>
-                    </i-row>
-                </div>
-
-                <div class='item-wrap'>
-                    <i-row class="equipment-item">
-                        <i-col span="8" i-class="col-class">
-                            设备型号:
-                            <span class='required-icon'>*</span>
-                        </i-col>
-                        <i-col span="16" i-class="input-wrap">
-                            <i-input 
-                                :value="equipmentInfo.equipmentModel" 
-                                i-class='equipment-input'
-                                @change='equipmentModelChange' 
-                                placeholder="请输入设备型号" 
-                            />
-                        </i-col>
-                    </i-row>
-                </div>
-                <div class='item-wrap'>
-                    <i-row class="equipment-item">
-                        <i-col span="8" i-class="col-class">
-                            系统厂牌:
-                            <span class='required-icon'>*</span>
-                        </i-col>
-                        <i-col span="16" i-class="input-wrap">
-                            <i-input 
-                                :value="equipmentInfo.systemLabel" 
-                                i-class='equipment-input'
-                                @change='systemLabelChange' 
-                                placeholder="请输入系统厂牌" 
-                            />
-                        </i-col>
-                    </i-row>
-                </div>
-                <div class='item-wrap'>
-                    <i-row class="equipment-item">
-                        <i-col span="8" i-class="col-class">
-                            系统版本:
-                        </i-col>
-                        <i-col span="16" i-class="input-wrap">
-                            <i-input 
-                                :value="equipmentInfo.systemVersion" 
-                                i-class='equipment-input'
-                                @change='systemVersionChange' 
-                                placeholder="请输入系统版本" 
-                            />
-                        </i-col>
-                    </i-row>
-                </div>
             
-                <div class='item-wrap'>
-                    <i-row class="equipment-item">
-                        <i-col span="8" i-class="col-class">
-                            IP地址:
-                        </i-col>
-                        <i-col span="16" i-class="input-wrap">
-                            <i-input 
-                                :value="equipmentInfo.ip" 
-                                i-class='equipment-input'
-                                @change='ipChange' 
-                                placeholder="请输入IP地址" 
-                            />
-                        </i-col>
-                    </i-row>
-                </div>
-                <div class='item-wrap'>
-                    <i-row class="equipment-item">
-                        <i-col span="8" i-class="col-class">
-                            端口号:
-                        </i-col>
-                        <i-col span="16" i-class="input-wrap">
-                            <i-input 
-                                :value="equipmentInfo.port" 
-                                i-class='equipment-input'
-                                @change='portChange' 
-                                placeholder="请输入端口号" 
-                            />
-                        </i-col>
-                    </i-row>
-                </div>
+                <i-input 
+                    :value="equipmentInfo.equipmentNumber"   
+                    title="设备序列号"  
+                    @change='equipmentNumberChange' 
+                    placeholder="请输入设备序列号" 
+                />
+                <i-input 
+                    :value="equipmentInfo.factoryName"   
+                    title="客户名称"   
+                    @change='factoryNameChange' 
+                    placeholder="请输入客户" />
+                <i-input 
+                    :value="equipmentInfo.equipmentNameText"  
+                    @click='openEquipmentnameModel' 
+                    disabled='false'
+                    title="设备名称" 
+                    placeholder="请输入设备名称" />
+                <i-input 
+                    :value="equipmentInfo.imei" 
+                    disabled='false'
+                    @click='handleScan'
+                    placeholder="请扫描IMEI"   
+                    title="IMEI" 
+                    />
+                <i-input 
+                    title="设备型号"
+                    :value="equipmentInfo.equipmentModel" 
+                    @change='equipmentModelChange' 
+                    placeholder="请输入设备型号"  />
+                <i-input 
+                    title="系统厂牌" 
+                    :value="equipmentInfo.systemLabel" 
+                    @change='systemLabelChange' 
+                    placeholder="请输入系统厂牌" 
+                />
+                <i-input 
+                    title="系统版本" 
+                    :value="equipmentInfo.systemVersion" 
+                    @change='systemVersionChange' 
+                    placeholder="请输入系统版本" 
+                />
+                <i-input 
+                    title="IP地址" 
+                    :value="equipmentInfo.ip" 
+                    @change='ipChange' 
+                    placeholder="请输入IP地址"  
+                />
+                <i-input 
+                    title="端口号" 
+                    :value="equipmentInfo.port" 
+                    @change='portChange' 
+                    placeholder="请输入端口号"
+                />
                 <div class='item-wrap'>
                     <i-row >
-                        <i-col span="8" >
-                            图片:
+                        <i-col span="4" class='upload-title'>
+                            图片
                         </i-col>
-                        <i-col span="16" >
+                        <i-col span="20" >
                             <image 
                                 @click='choseImage'
                                 class='upload-image' 
@@ -474,5 +384,8 @@ export default {
     width:200px;
     height:200px;
     margin-left:25px;
+}
+.upload-title{
+    color:#495060
 }
 </style>

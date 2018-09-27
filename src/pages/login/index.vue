@@ -53,15 +53,14 @@ export default {
 	methods: {
 		pwdChange(e){
 			this.passWord = e.target.detail.value;
-			console.log(e.target.detail.value)
 		},
 		userNameChange(e){
 			this.userName = e.target.detail.value;
 		},
 		handleLogin(){
 			const self =this;
-			// this.userName = 'cby';
-			// this.passWord = 'admin';
+			this.userName = 'ex_user';
+			this.passWord = 'admin';
 			if(!this.userName){
 				return wx.showToast({
 					title: '请输入用户名',

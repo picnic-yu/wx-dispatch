@@ -15,18 +15,6 @@
 			<section class='nodata' v-show='!externaleQuipmentList.length'>
 				暂无数据
 			</section>
-			<section >
-				<i-page :current="externalParam.pageNumber+1" :total="total" @change="handleChange">
-					<view slot="prev">
-						<i-icon type="return"></i-icon>
-						上一页
-					</view>
-					<view slot="next">
-						下一页
-						<i-icon type="enter"></i-icon>
-					</view>
-				</i-page>
-			</section>
 		</section>
 		
 		
@@ -65,7 +53,7 @@ export default {
 			external:false,
 			externaleQuipmentList:[],
 			externalParam:{
-				pageSize: 10,
+				pageSize: 100,
   				pageNumber: 0,
 			},
 			total:0
@@ -95,10 +83,13 @@ export default {
             })
 		},
 		handleToEditForm(item){
-			
-            wx.navigateTo({
-  				url: `../edit-equipment/main?equipmentId=${item.id}`
+			// 查看页面
+			wx.navigateTo({
+  				url: `../equipment-info/main?equipmentId=${item.id}`
             })
+            // wx.navigateTo({
+  			// 	url: `../edit-equipment/main?equipmentId=${item.id}`
+            // })
 		},
 		getList(){
 			const url = 'external/pg'
@@ -112,17 +103,6 @@ export default {
 	
 				}
 			});
-		},
-		handleChange (detail ) {
-			console.log(detail)
-			const type = detail.target.type;
-			if (type === 'next') {
-				this.externalParam.pageNumber +=1 ;
-				this.getList();
-			} else if (type === 'prev') {
-				this.externalParam.pageNumber -=1 ;
-				this.getList();
-			}
 		}
 	}
 }
