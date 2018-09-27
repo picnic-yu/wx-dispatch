@@ -2,7 +2,7 @@
 // export const rootDocment = 'https://manager.cloudkeeper.cn/management-api/';
 export const rootDocment = 'https://tmanager.cloudkeeper.cn/management-api/';
 // export const rootUrl = 'https://manager.cloudkeeper.cn';
-export const rootUrl = 'https://tmanager.cloudkeeper.cn/management-api/';
+export const rootUrl = 'https://tmanager.cloudkeeper.cn';
 let header = {
   'authorization': '',
   'content-type': 'application/json'
