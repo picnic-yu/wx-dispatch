@@ -1,7 +1,13 @@
 <template>
 	<section>
 		<section v-if='external'>
-			<equipment-form :hideForm='hideForm'></equipment-form>
+			<div class='add-wrap' @click='handleAdd'>
+				<span><i-icon type="add" size="28" color="#2d8cf0" /></span>
+				<span>添加设备信息</span>
+			</div>
+			<section class="item" v-for="item in externaleQuipmentList " :key="item.id" @click='handleToEditForm(item)' >
+				<list-card :equipmentItem='item'></list-card>
+			</section>
 		</section>
 		<view  v-if='!external' class="container" style="height:100vh;padding:0rpx">
 			<!-- 外部用户显示内容 -->
@@ -35,9 +41,11 @@
 <script>
 import { postReq } from '../../utils/request.js';
 import dispatchCard from './components/dispatch-card';
-import equipmentForm from './components/equipment-form';
 import lookupUtils from '../../utils/lookupUtils';
-import { lookUpdata } from '../../utils/lookup'
+import { lookUpdata } from '../../utils/lookup';
+
+import listCard from '../equipment-list/components/list-card';
+
 const url = `dispatch/order/mine/pg`;
 const transformListData = (item) => {
 		//DispatchTypeLookup 派工类型
@@ -48,6 +56,23 @@ const transformListData = (item) => {
 			'dispatchTypeText'
 		);
 	};
+
+const transformExternalListData = (item) => {
+	//设备状态equipmentStatusLookup
+	lookupUtils.transformData(
+		item,
+		lookUpdata.equipmentStatusLookup,
+		'equipmentStatus', 
+		'equipmentStatusText'
+	);
+	// 传感器状态sensorStatusLookup
+	lookupUtils.transformData(
+		item,
+		lookUpdata.sensorStatusLookup,
+		'iotCardStatus', 
+		'iotCardStatusText'
+	);
+};
 export default {
 	data () {
 		return {
@@ -56,17 +81,21 @@ export default {
 			dispatchList:[
 				
 			],
+			externaleQuipmentList:[],//外部人员设备信息list
 			postParam:{
 				pageNumber:0,
 				pageSize:10
 			},
+			externalParam:{
+				pageSize: 100,
+  				pageNumber: 0,
+			},//外部人员 dto
 			external:false,
-			hideForm:false
 		}
 	},
 	components: {
 		dispatchCard,
-		equipmentForm
+		listCard
 	},
 	mounted(){
 		
@@ -75,18 +104,46 @@ export default {
 		this.external = wx.getStorageSync('external');
 		if(!this.external){
 			this.getList();
+		}else{
+			this.getExternalList();
 		}
-		this.hideForm = false;
 		console.log(option,'option')
 	},
 	onHide:() => {
-		this.hideForm = true;
 	},
 	methods: {
 		refesh(){
 
 			this.refreshLoading = true;
 			this.getList();
+		},
+		handleToEditForm(item){
+			// 查看页面
+			wx.navigateTo({
+  				url: `../equipment-info/main?equipmentId=${item.id}`
+            })
+            // wx.navigateTo({
+  			// 	url: `../edit-equipment/main?equipmentId=${item.id}`
+            // })
+		},
+		handleAdd(){
+			wx.navigateTo({
+  				url: `../equipmentfom-external/main`
+            })
+		},
+		getExternalList(){
+			const url = 'external/pg'
+			postReq(url,this.externalParam,(data)=> {
+				if(data.code==200){
+					this.externaleQuipmentList = data.content.data;
+					this.externaleQuipmentList.forEach((item) => {
+						transformExternalListData(item);
+					});
+					this.total = data.content.rowCount;
+	
+				}
+				console.log(this.externaleQuipmentList)
+			});
 		},
 		handleToDispatchDetails(item){
             wx.navigateTo({
@@ -164,5 +221,21 @@ export default {
       transform: rotate(360deg);
     }
   }
+
+
+
+/* 外部人员新增样式 */
+.add-wrap{
+	width: 86%;
+	border-radius: 5px;
+	padding:15px;
+	border: 1px solid #e6e6e6;
+	margin: 1vh auto;
+	box-shadow:0px 0px 5px #ccc;
+	border-left:5px solid #2d8cf0;
+}
+.add-wrap span:last-child{
+	padding:0 0 0 4vw;
+}
 
 </style>

@@ -88,7 +88,7 @@ export const  postReq = (url, data, cb,flag=false) => {
         }
     })
 }
-export const  putReq = (url, data, cb,flag=false) => {
+export const  putReq = (url, cb,flag=false) => {
     try {
         var token = wx.getStorageSync('token');
         if(token){
@@ -112,6 +112,43 @@ export const  putReq = (url, data, cb,flag=false) => {
         success: function (res) {
             goToLogin(res.statusCode);
             
+            wx.hideLoading();
+            return typeof cb == "function" && cb(res.data)
+        },
+        fail: function () {
+            wx.hideLoading();
+            wx.showModal({
+                title: '网络错误',
+                content: '网络出错，请刷新重试',
+                showCancel: false
+            })
+            return typeof cb == "function" && cb(false)
+        }
+    })
+}
+export const  deleteReq = (url, cb,flag=false) => {
+    try {
+        var token = wx.getStorageSync('token');
+        if(token){
+            header.authorization = token;
+        }
+        
+    } catch (e) {
+        // Do something when catch error
+    }
+    if(!flag){
+        wx.showLoading({
+            title: '加载中',
+        })
+    }
+    
+    wx.request({
+        url: rootDocment + url,
+        header: header,
+        method: 'Delete',
+        success: function (res) {
+            console.log(res);
+            goToLogin(res.statusCode);
             wx.hideLoading();
             return typeof cb == "function" && cb(res.data)
         },

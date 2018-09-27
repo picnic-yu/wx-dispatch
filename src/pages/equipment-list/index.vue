@@ -92,7 +92,7 @@ export default {
             // })
 		},
 		getList(){
-			const url = 'external/pg'
+			const url = 'external/his/pg'
 			postReq(url,this.externalParam,(data)=> {
 				if(data.code==200){
 					this.externaleQuipmentList = data.content.data;

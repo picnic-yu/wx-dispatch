@@ -44,7 +44,7 @@
             <image :src='equipmentInfo.equipmentImage' alt="图片丢失"></image>
             <i-row class='item'>
                 <i-col span="12" i-class="col-class">
-                    <i-button @click='handleDelete' type='primary'>删除</i-button>
+                    <i-button @click='handleDelete' type='error '>删除</i-button>
                 </i-col>
                 <i-col span="12" i-class="col-class">
                     <i-button @click='handleUpdate' type='primary'>修改</i-button>
@@ -59,7 +59,7 @@
 <script>
 import lookupUtils from '../../utils/lookupUtils.js';
 import { lookUpdata } from '../../utils/lookup.js';
-import {rootDocment, rootUrl,putReq,getReq} from '../../utils/request.js';
+import {rootDocment, rootUrl,putReq,getReq,deleteReq} from '../../utils/request.js';
 
 const transformData = (item) => {
 		//DispatchTypeLookup 派工类型
@@ -131,7 +131,37 @@ export default {
     },
   	methods: {
         handleDelete(){
-            
+            if(this.equipmentInfo.equipmentStatus =='PENDING' && this.equipmentInfo.iotCardStatus == 'PENDING'){
+                const url = `/external/${this.equipmentInfo.id}`;
+                deleteReq(url, (data) => {
+                    console.log(data)
+                    if(data.code == 204){
+                        wx.showToast({
+                            title: '删除成功',
+                            duration: 2000,
+                            icon:'none'
+                        })
+                        wx.switchTab({
+                            url:'../index/main'
+                        })
+                    }else{
+                        wx.showToast({
+                            title: '删除失败',
+                            duration: 2000,
+                            icon:'none'
+                        })
+                    }
+                    
+                        
+                })
+            }else{
+                wx.showToast({
+                    title: '正在审核中,不能删除',
+                    duration: 2000,
+                    icon:'none'
+                })
+            }
+
         },
         handleUpdate(){
             wx.navigateTo({

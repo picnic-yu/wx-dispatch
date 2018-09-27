@@ -1,10 +1,9 @@
 <template>
     <section>
-        <section v-if='searchState' >
-            <search-company :customerName='equipmentInfo.companyName' @selectCompanyName='selectCompanyName'></search-company>
-        </section>
         <section class="counter-warp" >
+           
             <div class="form-wrap">
+            
                 <i-input 
                     :value="equipmentInfo.equipmentNumber"   
                     title="设备序列号"  
@@ -60,10 +59,10 @@
                 />
                 <div class='item-wrap'>
                     <i-row >
-                        <i-col span="8" >
-                            图片:
+                        <i-col span="4" class='upload-title'>
+                            图片
                         </i-col>
-                        <i-col span="16" >
+                        <i-col span="20" >
                             <image 
                                 @click='choseImage'
                                 class='upload-image' 
@@ -89,10 +88,10 @@
 </template>
 
 <script>
-import lookupUtils from '../../utils/lookupUtils.js';
-import { lookUpdata } from '../../utils/lookup.js';
-import {rootDocment, rootUrl,putReq,getReq} from '../../utils/request.js';
-
+import lookupUtils from '../../utils/lookupUtils';
+import { lookUpdata } from '../../utils/lookup';
+import {rootDocment, rootUrl} from '../../utils/request.js';
+import { postReq } from '../../utils/request.js';
 const transformData = (item) => {
 		//DispatchTypeLookup 派工类型
     lookupUtils.transformData(
@@ -106,32 +105,6 @@ const transformData = (item) => {
 export default {
 	computed: {
     	
-    },
-    onLoad: function (options) {
-        if(options.equipmentId){
-            const url = `external/${options.equipmentId}`
-            getReq(url, (data) => {
-                if(data.code == 200){
-                    const id = data.content.id;
-                    Object.assign(this.equipmentInfo,data.content.customerCompany,data.content,{id});
-                    this.equipmentInfo.customerCompanyId = data.content.customerCompany.id;
-                    
-                    transformData(this.equipmentInfo);
-                    if(!this.equipmentInfo.equipmentImage){
-                        this.equipmentInfo.equipmentImage = '/static/images/upload.png';
-                    }
-                    if(this.equipmentInfo.equipmentStatus == 'CONFIRMED') {
-                        this.isDisabled = false;
-                    };
-                    console.log(this.equipmentInfo,'equipment-input')
-                }else{
-
-                }
-                    console.log(data)
-                    
-            })
-        }
-        
     },
     data() {
         return {
@@ -151,10 +124,9 @@ export default {
                 imei:'',//IMEI
                 ip:'',//IP地址
                 port:'',//端口号
-               
+                factoryName:'',//客户
                 equipmentImage:'/static/images/upload.png',
             },
-            isDisabled:true
         }
 
     },
@@ -162,11 +134,13 @@ export default {
         
     },
     props: {
-        
+        hideForm:{
+            type:Boolean,
+            default:false
+        }
     },
   	methods: {
         choseImage(){
-            if(this.equipmentInfo.equipmentStatus == 'CONFIRMED') return;
             const self =this;
             wx.chooseImage({
                 count: 1,
@@ -231,14 +205,18 @@ export default {
                 success: function(res){
                     const data = JSON.parse(res.data);
                     data.code == 200 ? self.equipmentInfo.equipmentImage = `${rootUrl}${data.content}`:'/static/images/upload.png';
+                    console.log(self.equipmentInfo.equipmentImage)
                 },
                 fail: function(res){
-
+                    wx.showToast({
+                        title: '图片上传失败',
+                        duration: 2000,
+                        icon:'none'
+                    })
                 },
             })
         },
         openEquipmentnameModel(){
-            if(this.equipmentInfo.equipmentStatus == 'CONFIRMED') return;
             this.equipmentnemeModelStatus = true;
         },
         // 选择设备名称
@@ -285,15 +263,19 @@ export default {
 				})
             }
 
-            // 下面处理本地设备列表数据
+            
             const url ='external/';
-            putReq(url, this.equipmentInfo, (data) => {
+            postReq(url, this.equipmentInfo, (data) => {
                 if(data.code == 200){
                     wx.switchTab({
-						url:'../equipment-list/main'
+						url:'../index/main'
 					})
                 }else{
-
+                    return wx.showToast({
+                        title: '保存失败',
+                        duration: 2000,
+                        icon:'none'
+                    })
                 }
             });
         },
@@ -317,7 +299,7 @@ export default {
             this.equipmentInfo.systemVersion = e.target.detail.value;
         },
         // ip地址
-        ipAddressChange(e) {
+        ipChange(e) {
             this.equipmentInfo.ip = e.target.detail.value;
         },
         factoryNameChange(e){
@@ -328,7 +310,6 @@ export default {
         },
         // 扫描imei
         handleScan(){
-            if(this.equipmentInfo.equipmentStatus == 'DISMISSED') return;
             wx.scanCode({
                 success: (res) => {
                     // 扫码成功后获取数据返回
@@ -340,10 +321,23 @@ export default {
     },
     components: {
 		
-	},
-    watch:{
-        
-    }
+    },
+    onLoad:function(option){
+		this.equipmentInfo =  {
+            equipmentNumber:'',//设备序列号
+            companyName:'',//客户名称
+            customerCompanyId:'',//客户id
+            equipmentName:'001',//设备名称code
+            equipmentNameText:'CNC加工中心',//设备名称
+            equipmentModel: '',//设备型号
+            systemLabel:'',//系统厂牌
+            systemVersion:'',//系统版本
+            imei:'',//IMEI
+            ip:'',//IP地址
+            port:'',//端口号
+            equipmentImage:'/static/images/upload.png',
+        }
+	}
 }
 </script>
 
@@ -391,5 +385,8 @@ export default {
     width:200px;
     height:200px;
     margin-left:25px;
+}
+.upload-title{
+    color:#495060
 }
 </style>

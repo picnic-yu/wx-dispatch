@@ -1,236 +1,103 @@
 <template>
 	<section class="counter-warp">
         <div class="form-wrap">
-            <div class='item-wrap'>
-                <i-row class="input-item">
-                    <i-col span="8" i-class="col-class">
-                        设备序列号:
-                        <span class='required-icon'>*</span>
-                    </i-col>
-                    <i-col span="16" i-class="input-wrap">
-                        <i-input 
-                            :value="saveParam.equipmentNumber" 
-                            i-class='iview-input' 
-                            @change='equipmentNumberChange'
-                            placeholder="请输入设备序列号" 
-                        />
-                    </i-col>
-                </i-row>
-            </div>
-             <div class='item-wrap'>
-                <i-row class="input-item">
-                    <i-col span="8" i-class="col-class">
-                        设备制造商:
-                        <span class='required-icon'>*</span>
-                    </i-col>
-                    <i-col span="16" i-class="input-wrap">
-                        <i-input 
-                            :value="saveParam.manufacturerName" 
-                            i-class='iview-input' 
-                            @change = 'manufacturerNameChange'
-                            placeholder="请输入设备制造商" 
-                        />
-                    </i-col>
-                </i-row>
-            </div>
-            <div class='item-wrap'>
-                <i-row class="input-item">
-                    <i-col span="8" i-class="col-class">
-                        制造商简称:
-                        <span class='required-icon'>*</span>
-                    </i-col>
-                    <i-col span="16" i-class="input-wrap">
-                        <i-input 
-                            :value="saveParam.manufacturerSimpleName" 
-                            i-class='iview-input'
-                            @change='manufacturerSimpleNameChange' 
-                            placeholder="请输入制造商简称" 
-                        />
-                    </i-col>
-                </i-row>
-            </div>
-             <div class='item-wrap'>
-                <i-row class="input-item">
-                    <i-col span="8" i-class="col-class">
-                        传感器编号:
-                        <span class='required-icon'>*</span>
-                    </i-col>
-                    <i-col span="16" i-class="input-wrap">
-                        <i-input @click='handleSearch(1,saveParam.sensorNumber)'
-                            :value="saveParam.sensorNumber" 
-                            disabled='false'
-                            i-class='iview-input'
-                            placeholder="请选择传感器编号" 
-                        />
-                    </i-col>
-                </i-row>
-            </div>
-            <div class='item-wrap'>
-                <i-row class="input-item">
-                    <i-col span="8" i-class="col-class">
-                        物联卡编号:
-                        <span class='required-icon'>*</span>
-                    </i-col>
-                    <i-col span="16" i-class="input-wrap">
-                        <i-input 
-                            @click='handleSearch(2,saveParam.cardNumber)'
-                            :value="saveParam.cardNumber" 
-                            i-class='iview-input'
-                            disabled='false'
-                            placeholder="请选择物联卡编号" 
-                        />
-                    </i-col>
-                </i-row>
-            </div>
-            <div class='item-wrap'>
-                <i-row class="input-item">
-                    <i-col span="8" i-class="col-class">
-                        工厂名称:
-                    </i-col>
-                    <i-col span="16" i-class="input-wrap">
-                        <i-input 
-                            :value="saveParam.factoryName" 
-                            i-class='iview-input'
-                            @change='factoryNameChange'
-                            placeholder="请输入工厂名称" 
-                        />
-                    </i-col>
-                </i-row>
-            </div>
-           
-            <div class='item-wrap'>
-                <i-row class="input-item">
-                    <i-col span="8" i-class="col-class">
-                        设备名称:
-                    </i-col>
-                    <i-col span="16" i-class="input-wrap">
-                        <i-input 
-                            @click='openEquipmentnameModel'
-                            :value="saveParam.equipmentNameText" 
-                            i-class='iview-input'
-                            disabled='false'
-                            placeholder="请输入设备名称" 
-                        />
-                    </i-col>
-                </i-row>
-            </div>
-            <div class='item-wrap'>
-                <i-row class="input-item">
-                    <i-col span="8" i-class="col-class">
-                        设备型号:
-                    </i-col>
-                    <i-col span="16" i-class="input-wrap">
-                        <i-input 
-                            :value="saveParam.equipmentModel" 
-                            i-class='iview-input'
-                            @change='equipmentModelChange' 
-                            placeholder="请输入设备型号" 
-                        />
-                    </i-col>
-                </i-row>
-            </div>
-            <div class='item-wrap'>
-                <i-row class="input-item">
-                    <i-col span="8" i-class="col-class">
-                        系统厂牌:
-                        <span class='required-icon'>*</span>
-                    </i-col>
-                    <i-col span="16" i-class="input-wrap">
-                        <i-input 
-                            :value="saveParam.systemLabel" 
-                            i-class='iview-input'
-                            @change='systemLabelChange' 
-                            placeholder="请输入系统厂牌" 
-                        />
-                    </i-col>
-                </i-row>
-            </div>
-            <div class='item-wrap'>
-                <i-row class="input-item">
-                    <i-col span="8" i-class="col-class">
-                        系统版本:
-                    </i-col>
-                    <i-col span="16" i-class="input-wrap">
-                        <i-input 
-                            :value="saveParam.systemVersion" 
-                            i-class='iview-input'
-                            @change='systemVersionChange' 
-                            placeholder="请输入系统版本" 
-                        />
-                    </i-col>
-                </i-row>
-            </div>
-           
-            <div class='item-wrap'>
-                <i-row class="input-item">
-                    <i-col span="8" i-class="col-class">
-                        IP地址:
-                    </i-col>
-                    <i-col span="16" i-class="input-wrap">
-                        <i-input 
-                            :value="saveParam.ipAddress" 
-                            i-class='iview-input'
-                            @change='ipAddressChange' 
-                            placeholder="请输入IP地址" 
-                        />
-                    </i-col>
-                </i-row>
-            </div>
-            <div class='item-wrap'>
-                <i-row class="input-item">
-                    <i-col span="8" i-class="col-class">
-                        端口号:
-                    </i-col>
-                    <i-col span="16" i-class="input-wrap">
-                        <i-input 
-                            :value="saveParam.portNumber" 
-                            i-class='iview-input'
-                            @change='portNumberChange' 
-                            placeholder="请输入端口号" 
-                        />
-                    </i-col>
-                </i-row>
-            </div>
-            <div class='item-wrap'>
-                <i-row class="input-item">
-                    <i-col span="8" i-class="col-class">
-                        用户:
-                    </i-col>
-                    <i-col span="16" i-class="input-wrap">
-                        <i-input 
-                            i-class='iview-input'
-                            :value="saveParam.userName" 
-                            @change='userNameChange' 
-                            placeholder="请输入用户" 
-                        />
-                    </i-col>
-                </i-row>
-            </div>
-            <div class='item-wrap'>
-                <i-row class="input-item">
-                    <i-col span="8" i-class="col-class">
-                        密码:
-                    </i-col>
-                    <i-col span="16" i-class="input-wrap">
-                        <i-input  
-                            :value="saveParam.userPassword" 
-                            i-class='iview-input'
-                            @change='userPasswordChange' 
-                            placeholder="请输入密码" 
-                        />
-                    </i-col>
-                </i-row>
-            </div>
+            <i-input 
+                title="设备序列号" 
+                :value="saveParam.equipmentNumber" 
+                @change='equipmentNumberChange' 
+                placeholder="请输入设备序列号"  
+            />
+            <i-input 
+                title="设备制造商" 
+                :value="saveParam.manufacturerName" 
+                @change = 'manufacturerNameChange'
+                placeholder="请输入设备制造商"   
+            />
+            <i-input 
+                title="制造商简称" 
+                :value="saveParam.manufacturerSimpleName" 
+                @change='manufacturerSimpleNameChange' 
+                placeholder="请输入制造商简称"    
+            />
+            <i-input 
+                title="传感器编号" 
+                :value="saveParam.sensorNumber" 
+                disabled='false'
+                @click='handleSearch(1,saveParam.sensorNumber)'
+                placeholder="请选择传感器编号"    
+            />
+            <i-input 
+                title="物联卡编号" 
+                @click='handleSearch(2,saveParam.cardNumber)'
+                :value="saveParam.cardNumber" 
+                disabled='false'
+                placeholder="请选择物联卡编号"     
+            />
+            <i-input 
+                title="工厂名称" 
+                :value="saveParam.factoryName" 
+                @change='factoryNameChange'
+                placeholder="请输入工厂名称"      
+            />
+            <i-input 
+                title="设备名称" 
+                @click='openEquipmentnameModel'
+                :value="saveParam.equipmentNameText" 
+                disabled='false'
+                placeholder="请输入设备名称"      
+            />
+            <i-input 
+                title="设备型号" 
+                :value="saveParam.equipmentModel" 
+                @change='equipmentModelChange' 
+                placeholder="请输入设备型号"       
+            />
+            <i-input 
+                title="系统厂牌" 
+                :value="saveParam.systemLabel" 
+                @change='systemLabelChange' 
+                placeholder="请输入系统厂牌"        
+            />
+            <i-input 
+                title="系统版本" 
+                :value="saveParam.systemVersion" 
+                @change='systemVersionChange' 
+                placeholder="请输入系统版本"        
+            />
+            <i-input 
+                title="IP地址" 
+                :value="saveParam.ipAddress" 
+                @change='ipAddressChange' 
+                placeholder="请输入IP地址"         
+            />
+            <i-input 
+                title="端口号" 
+                :value="saveParam.portNumber" 
+                @change='portNumberChange' 
+                placeholder="请输入端口号"         
+            />
+            <i-input 
+                title="用户" 
+                :value="saveParam.userName" 
+                @change='userNameChange' 
+                placeholder="请输入用户"        
+            />
+            <i-input 
+                title="密码" 
+                :value="saveParam.userPassword" 
+                @change='userPasswordChange' 
+                placeholder="请输入密码"         
+            />
             <div class='item-wrap'>
                 <i-row >
-                    <i-col span="8" >
-                        图片:
+                    <i-col span="4" class='upload-title'>
+                        图片
                     </i-col>
-                    <i-col span="16" >
+                    <i-col span="20" >
                         <image 
                             @click='choseImage'
                             class='upload-image' 
-                            :src='saveParam.equipmentImage'></image>
+                            :src='equipmentInfo.equipmentImage'></image>
                     </i-col>
                 </i-row>
             </div>
@@ -576,5 +443,8 @@ export default {
     width:200px;
     height:200px;
     margin-left:25px;
+}
+.upload-title{
+    color:#495060
 }
 </style>
