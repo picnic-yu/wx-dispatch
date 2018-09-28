@@ -2,52 +2,58 @@
     <section class='card-wrap'>
         <section class='info-wrap'>
             <i-row class='item'>
-                <i-col span="8" i-class="col-class">设备序列号:</i-col>
+                <i-col span="8" i-class="col-class "><span class='item-title'>设备序列号:</span></i-col>
                 <i-col span="16" i-class="col-class">{{equipmentInfo.equipmentNumber}}</i-col>
             </i-row>
             <i-row class='item'>
-                <i-col span="8" i-class="col-class">客户名称:</i-col>
+                <i-col span="8" i-class="col-class "><span class='item-title'>客户名称:</span></i-col>
                 <i-col span="16" i-class="col-class">{{equipmentInfo.factoryName}}</i-col>
             </i-row>
             <i-row class='item'>
-                <i-col span="8" i-class="col-class">设备名称:</i-col>
+                <i-col span="8" i-class="col-class "><span class='item-title'>设备名称:</span></i-col>
                 <i-col span="16" i-class="col-class">{{equipmentInfo.equipmentNameText}}</i-col>
             </i-row>
             <i-row class='item'>
-                <i-col span="8" i-class="col-class">IMEI:</i-col>
+                <i-col span="8" i-class="col-class "><span class='item-title'>IMEI:</span></i-col>
                 <i-col span="16" i-class="col-class">{{equipmentInfo.imei}}</i-col>
             </i-row>
             <i-row class='item'>
-                <i-col span="8" i-class="col-class">设备型号:</i-col>
+                <i-col span="8" i-class="col-class "><span class='item-title'>设备型号:</span></i-col>
                 <i-col span="16" i-class="col-class">{{equipmentInfo.equipmentModel}}</i-col>
             </i-row>
             <i-row class='item'>
-                <i-col span="8" i-class="col-class">系统厂牌:</i-col>
+                <i-col span="8" i-class="col-class "><span class='item-title'>系统厂牌:</span></i-col>
                 <i-col span="16" i-class="col-class">{{equipmentInfo.systemLabel}}</i-col>
             </i-row>
             <i-row class='item'>
-                <i-col span="8" i-class="col-class">系统版本:</i-col>
+                <i-col span="8" i-class="col-class "><span class='item-title'>系统版本:</span></i-col>
                 <i-col span="16" i-class="col-class">{{equipmentInfo.systemVersion}}</i-col>
             </i-row>
             <i-row class='item'>
-                <i-col span="8" i-class="col-class">IP地址:</i-col>
+                <i-col span="8" i-class="col-class "><span class='item-title'>IP地址:</span></i-col>
                 <i-col span="16" i-class="col-class">{{equipmentInfo.ip}}</i-col>
             </i-row>
             <i-row class='item'>
-                <i-col span="8" i-class="col-class">端口号:</i-col>
+                <i-col span="8" i-class="col-class "><span class='item-title'>端口号:</span></i-col>
                 <i-col span="16" i-class="col-class">{{equipmentInfo.port}}</i-col>
             </i-row>
         </section>
         
         <section  >
-            <div class='img-title'>图片信息</div>
-            <image :src='equipmentInfo.equipmentImage' alt="图片丢失"></image>
+             <i-row class='image-item'>
+                <i-col span="8" i-class="col-class "><span class='item-title img-info'>图片信息</span></i-col>
+                <i-col span="16" i-class="col-class">
+                    
+                    <image :src='equipmentInfo.equipmentImage' :mode='imageMode' class='in-image'   ></image>
+                </i-col>
+            </i-row>
+
             <i-row class='item' v-if='operateBtnStatus'>
                 <i-col span="12" i-class="col-class">
-                    <i-button @click='handleDelete' type='error '>删除</i-button>
+                    <div @click='handleDelete' class='delete-btn'>删除</div>
                 </i-col>
                 <i-col span="12" i-class="col-class">
-                    <i-button @click='handleUpdate' type='primary'>修改</i-button>
+                    <div @click='handleUpdate' class='update-btn'>修改</div>
                 </i-col>
             </i-row>
             
@@ -92,11 +98,8 @@ export default {
                     }
                     if(this.equipmentInfo.equipmentStatus == "CONFIRMED" && this.equipmentInfo.iotCardStatus == "CONFIRMED"){
                         this.operateBtnStatus = false;
-                        console.log(this.operateBtnStatus)
-                        console.log(22)
+                        
                     }else{
-                        console.log(2233333)
-                        console.log(this.operateBtnStatus)
                         this.operateBtnStatus = true;
                     }
                 }else{
@@ -124,7 +127,8 @@ export default {
                 port:'',//端口号
                 equipmentImage:'/static/images/upload.png',
             },
-            operateBtnStatus:true
+            operateBtnStatus:true,
+            imageMode:'aspectFit'
         }
 
     },
@@ -177,9 +181,7 @@ export default {
 		
 	},
     watch:{
-        operateBtnStatus(curVal,oldVal){
-　　　　　　　　　　console.log(curVal,oldVal);
-　　　　　　　　},
+
     }
 }
 </script>
@@ -195,11 +197,12 @@ export default {
         box-shadow:0px 0px 5px #ccc;
     }
     .item{
-        line-height: 15vmin;
+        line-height: 30px;
         color:#495060;
     }
     .info-wrap{
         padding-bottom:3vh;
+        margin-bottom:10px ;
         border-bottom: 1px dashed #e6e6e6;
     }
     .img-title{
@@ -208,10 +211,50 @@ export default {
         line-height: 10vh;
 
     }
-    image{
-        display: block;
-        margin:0 auto;
+    .img-info{
+        line-height: 240px;
     }
-    
+    .item-title{
+        color:#999 ;
+    }
+    /* image{
+        display: block;
+        width: 200px; height: 200px;
+        margin:0 auto;
+    } */
+   
+    .imagesize{
+        display:flex;                       
+        justify-content: center;            
+    }
+    .imagesize image { 
+        height:200px;
+        
+        line-height: 200px;
+    }
+    .image-item{
+        /* height:200px; */
+        padding-top:2vh;
+        
+    }
+    .delete-btn{
+        width:80%;
+        height:40px;
+        margin:2vh auto;
+        line-height: 40px;
+        border:1px solid #e6e6e6;
+        border-radius: 3px;
+        text-align: center;
+    }
+    .update-btn{
+        width:80%;
+        height:40px;
+        margin:2vh auto;
+        line-height: 40px;
+        border:1px solid #2d8cf0;
+        color:#2d8cf0;
+        border-radius: 3px;
+        text-align: center;
+    }
 
 </style>

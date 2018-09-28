@@ -60,10 +60,10 @@
                 />
                 <div class='item-wrap'>
                     <i-row >
-                        <i-col span="8" >
+                        <i-col span="4" >
                             图片:
                         </i-col>
-                        <i-col span="16" >
+                        <i-col span="20" >
                             <image 
                                 @click='choseImage'
                                 class='upload-image' 
