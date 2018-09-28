@@ -97,7 +97,7 @@
                         <image 
                             @click='choseImage'
                             class='upload-image' 
-                            :src='equipmentInfo.equipmentImage'></image>
+                            :src='saveParam.equipmentImage'></image>
                     </i-col>
                 </i-row>
             </div>
@@ -192,7 +192,6 @@ export default {
                             // self.canvasWidth = canvasWidth;
                             // self.canvasHeight = canvasHeight;
                             ctx.drawImage(photo.tempFilePaths[0], 0, 0, 200, 200)
-                            console.log(photo.tempFilePaths[0])
                             ctx.draw()
                             //下载canvas图片
                             setTimeout(function(){
@@ -200,7 +199,6 @@ export default {
                                 canvasId: 'photo_canvas',
                                 success: function (res) {
                                 
-                                console.log(res.tempFilePath)
                                 self.uploadImage(res.tempFilePath);
                                 },
                                 fail: function (error) {
@@ -290,7 +288,6 @@ export default {
             }
 
             // 下面处理本地设备列表数据
-            console.log(this.saveParam)
             if( this.equipmentIndex !== null ){
                 this.equipmentList[this.equipmentIndex] = this.saveParam;
             }else{
@@ -359,7 +356,6 @@ export default {
     onLoad:function (options){
         this.equipmentList = wx.getStorageSync('equipmentList');
         this.equipmentIndex = wx.getStorageSync('equipmentIndex');
-        console.log(this.equipmentIndex)
         try{
             if(this.equipmentIndex !== null){
                 Object.assign(this.saveParam,this.equipmentList[this.equipmentIndex]);

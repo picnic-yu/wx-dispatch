@@ -107,7 +107,6 @@ export default {
 		}else{
 			this.getExternalList();
 		}
-		console.log(option,'option')
 	},
 	onHide:() => {
 	},
@@ -119,6 +118,7 @@ export default {
 		},
 		handleToEditForm(item){
 			// 查看页面
+			wx.setStorageSync('page', 'index');
 			wx.navigateTo({
   				url: `../equipment-info/main?equipmentId=${item.id}`
             })
@@ -142,10 +142,10 @@ export default {
 					this.total = data.content.rowCount;
 	
 				}
-				console.log(this.externaleQuipmentList)
 			});
 		},
 		handleToDispatchDetails(item){
+			wx.setStorageSync('equipmentIndex', null);
             wx.navigateTo({
   				url: `../dispatch-details/main?id=${item.id}&dispatchNumber=${item.dispatchNumber}`
             })

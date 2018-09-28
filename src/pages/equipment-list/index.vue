@@ -84,6 +84,7 @@ export default {
 		},
 		handleToEditForm(item){
 			// 查看页面
+			wx.setStorageSync('page', 'equipment-list');
 			wx.navigateTo({
   				url: `../equipment-info/main?equipmentId=${item.id}`
             })

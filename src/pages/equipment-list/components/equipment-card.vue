@@ -57,6 +57,7 @@ export default {
         border: 1px solid #e6e6e6;
         margin: 1vh auto;
         box-shadow:0px 0px 5px #ccc;
+        border-left:5px solid #2d8cf0;
     }
     .item{
         width:100%;

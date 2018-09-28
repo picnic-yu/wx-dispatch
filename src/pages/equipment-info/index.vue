@@ -91,12 +91,9 @@ export default {
                         this.equipmentInfo.equipmentImage = `${rootUrl}${data.content.equipmentImage}`;
                     }
                     
-                    console.log(this.equipmentInfo,'equipment-input')
                 }else{
 
                 }
-                    console.log(data)
-                    
             })
         }
         
@@ -134,7 +131,6 @@ export default {
             if(this.equipmentInfo.equipmentStatus =='PENDING' && this.equipmentInfo.iotCardStatus == 'PENDING'){
                 const url = `/external/${this.equipmentInfo.id}`;
                 deleteReq(url, (data) => {
-                    console.log(data)
                     if(data.code == 204){
                         wx.showToast({
                             title: '删除成功',

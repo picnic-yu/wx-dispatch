@@ -6,13 +6,14 @@ export default {
     const external = wx.getStorageSync('external') || false;
     const equipmentList = wx.getStorageSync('equipmentList') || []
     const equipmentIndex = wx.getStorageSync('equipmentIndex') || null
+    const page = wx.getStorageSync('page') || null
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
     wx.setStorageSync('equipmentList', equipmentList);
     wx.setStorageSync('external', external);
     wx.setStorageSync('equipmentIndex', equipmentIndex);
+    wx.setStorageSync('page', page);
 
-    console.log('app created and cache logs by setStorageSync')
   }
 }
 </script>

@@ -168,7 +168,6 @@ export default {
                             // self.canvasWidth = canvasWidth;
                             // self.canvasHeight = canvasHeight;
                             ctx.drawImage(photo.tempFilePaths[0], 0, 0, 200, 200)
-                            console.log(photo.tempFilePaths[0])
                             ctx.draw()
                             //下载canvas图片
                             setTimeout(function(){
@@ -176,7 +175,6 @@ export default {
                                 canvasId: 'equipmentInfo_canvas',
                                 success: function (res) {
                                 
-                                console.log(res.tempFilePath)
                                 self.uploadImage(res.tempFilePath);
                                 },
                                 fail: function (error) {
@@ -205,7 +203,6 @@ export default {
                 success: function(res){
                     const data = JSON.parse(res.data);
                     data.code == 200 ? self.equipmentInfo.equipmentImage = `${rootUrl}${data.content}`:'/static/images/upload.png';
-                    console.log(self.equipmentInfo.equipmentImage)
                 },
                 fail: function(res){
                     wx.showToast({

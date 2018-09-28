@@ -97,7 +97,6 @@ export default {
         },
         handlePing(){
             getReq(this.pingUrl, (data) => {
-                console.log(data,'ping')
                 // success
                 if(data.code == 100){
                     this.stepStatus = 1;
@@ -111,7 +110,6 @@ export default {
         handleTelnet(){
             if(this.stepStatus !== 1) return;
             getReq(this.telnetUrl, (data) => {
-                console.log(data,'telnet')
                 if(data.code == 100){
                     this.telnetText = '检测TELNET成功';
                     this.stepStatus = 2;
@@ -125,7 +123,6 @@ export default {
             const url =`equipmentInfo/${this.equipmentList[this.equipmentIndex].equipmentNumber}/snapshot`;
             getReq(url, (data) => {
                 this.snapShotData =  JSON.stringify(data);
-                console.log(data)
             });
 		}
   	}

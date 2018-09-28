@@ -41,7 +41,6 @@ export default {
 		wx.getStorage({
 			key: 'token',
 			success: function(res) {
-				console.log(res.data)
 				if(res.data){
 					wx.switchTab({
 						url:'../index/main'
@@ -79,7 +78,6 @@ export default {
 			
 			const url = `tokens/login?username=${this.userName}&password=${this.passWord}`;
 			getReq(url, (data) => {
-				console.log(data)
 				// 用户名或者密码错误处理
 				if(data.code == -1001){
 					return wx.showToast({

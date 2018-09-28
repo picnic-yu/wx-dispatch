@@ -119,16 +119,15 @@ export default {
                     transformData(this.equipmentInfo);
                     if(!this.equipmentInfo.equipmentImage){
                         this.equipmentInfo.equipmentImage = '/static/images/upload.png';
+                    }else{
+                        this.equipmentInfo.equipmentImage = `${rootUrl}${data.content.equipmentImage}`;
                     }
                     if(this.equipmentInfo.equipmentStatus == 'CONFIRMED') {
                         this.isDisabled = false;
                     };
-                    console.log(this.equipmentInfo,'equipment-input')
                 }else{
 
                 }
-                    console.log(data)
-                    
             })
         }
         
@@ -194,7 +193,6 @@ export default {
                             // self.canvasWidth = canvasWidth;
                             // self.canvasHeight = canvasHeight;
                             ctx.drawImage(photo.tempFilePaths[0], 0, 0, 200, 200)
-                            console.log(photo.tempFilePaths[0])
                             ctx.draw()
                             //下载canvas图片
                             setTimeout(function(){
@@ -202,7 +200,6 @@ export default {
                                 canvasId: 'equipmentInfo_canvas',
                                 success: function (res) {
                                 
-                                console.log(res.tempFilePath)
                                 self.uploadImage(res.tempFilePath);
                                 },
                                 fail: function (error) {
@@ -287,13 +284,18 @@ export default {
 
             // 下面处理本地设备列表数据
             const url ='external/';
+            const page = wx.getStorageSync('page') || 'index'
             putReq(url, this.equipmentInfo, (data) => {
                 if(data.code == 200){
                     wx.switchTab({
-						url:'../equipment-list/main'
+						url:`../${page}/main`
 					})
                 }else{
-
+                    return wx.showToast({
+                        title: '保存失败',
+                        duration: 2000,
+                        icon:'none'
+                    })
                 }
             });
         },

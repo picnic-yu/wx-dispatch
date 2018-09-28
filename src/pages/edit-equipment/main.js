@@ -16,6 +16,6 @@ export default {
             "i-cell-group": "../../../static/iview/cell-group/index",
             "i-cell": "../../../static/iview/cell/index"
         },
-        navigationBarTitleText:'我的派工单',
+        navigationBarTitleText:'编辑设备信息',
     }
 }

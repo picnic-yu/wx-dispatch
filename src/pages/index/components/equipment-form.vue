@@ -13,7 +13,7 @@
                 <i-input 
                     :value="equipmentInfo.factoryName"   
                     title="客户名称"   
-                    @change='factoryNameChange' 
+                     @change='factoryNameChange' 
                     placeholder="请输入客户" />
                 <i-input 
                     :value="equipmentInfo.equipmentNameText"  
@@ -168,16 +168,13 @@ export default {
                             // self.canvasWidth = canvasWidth;
                             // self.canvasHeight = canvasHeight;
                             ctx.drawImage(photo.tempFilePaths[0], 0, 0, 200, 200)
-                            console.log(photo.tempFilePaths[0])
                             ctx.draw()
                             //下载canvas图片
                             setTimeout(function(){
                             wx.canvasToTempFilePath({
                                 canvasId: 'equipmentInfo_canvas',
                                 success: function (res) {
-                                
-                                console.log(res.tempFilePath)
-                                self.uploadImage(res.tempFilePath);
+                                    self.uploadImage(res.tempFilePath);
                                 },
                                 fail: function (error) {
                                 }

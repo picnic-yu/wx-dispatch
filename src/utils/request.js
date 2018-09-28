@@ -88,7 +88,7 @@ export const  postReq = (url, data, cb,flag=false) => {
         }
     })
 }
-export const  putReq = (url, cb,flag=false) => {
+export const  putReq = (url, data,cb,flag=false) => {
     try {
         var token = wx.getStorageSync('token');
         if(token){
@@ -147,7 +147,6 @@ export const  deleteReq = (url, cb,flag=false) => {
         header: header,
         method: 'Delete',
         success: function (res) {
-            console.log(res);
             goToLogin(res.statusCode);
             wx.hideLoading();
             return typeof cb == "function" && cb(res.data)
