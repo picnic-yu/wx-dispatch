@@ -42,7 +42,7 @@
         <section  >
             <div class='img-title'>图片信息</div>
             <image :src='equipmentInfo.equipmentImage' alt="图片丢失"></image>
-            <i-row class='item'>
+            <i-row class='item' v-if='operateBtnStatus'>
                 <i-col span="12" i-class="col-class">
                     <i-button @click='handleDelete' type='error '>删除</i-button>
                 </i-col>
@@ -90,7 +90,15 @@ export default {
                     }else{
                         this.equipmentInfo.equipmentImage = `${rootUrl}${data.content.equipmentImage}`;
                     }
-                    
+                    if(this.equipmentInfo.equipmentStatus == "CONFIRMED" && this.equipmentInfo.iotCardStatus == "CONFIRMED"){
+                        this.operateBtnStatus = false;
+                        console.log(this.operateBtnStatus)
+                        console.log(22)
+                    }else{
+                        console.log(2233333)
+                        console.log(this.operateBtnStatus)
+                        this.operateBtnStatus = true;
+                    }
                 }else{
 
                 }
@@ -114,9 +122,9 @@ export default {
                 imei:'',//IMEI
                 ip:'',//IP地址
                 port:'',//端口号
-               
                 equipmentImage:'/static/images/upload.png',
             },
+            operateBtnStatus:true
         }
 
     },
@@ -169,7 +177,9 @@ export default {
 		
 	},
     watch:{
-        
+        operateBtnStatus(curVal,oldVal){
+　　　　　　　　　　console.log(curVal,oldVal);
+　　　　　　　　},
     }
 }
 </script>
