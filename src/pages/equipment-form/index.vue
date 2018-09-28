@@ -90,10 +90,10 @@
             />
             <div class='item-wrap'>
                 <i-row >
-                    <i-col span="4" class='upload-title'>
+                    <!-- <i-col span="4" class='upload-title'>
                         图片
-                    </i-col>
-                    <i-col span="20" >
+                    </i-col> -->
+                    <i-col span="24" >
                         <image 
                             @click='choseImage'
                             class='upload-image' 
@@ -436,9 +436,11 @@ export default {
     display:none !important;
 }
 .upload-image{
-    width:200px;
-    height:200px;
-    margin-left:25px;
+    width:150px !important;
+    height:150px !important;
+    margin:0 auto;
+    display:block;
+    margin-top:10px;
 }
 .upload-title{
     color:#495060
