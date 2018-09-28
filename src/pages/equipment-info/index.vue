@@ -212,7 +212,7 @@ export default {
 
     }
     .img-info{
-        line-height: 240px;
+        line-height: 200px;
     }
     .item-title{
         color:#999 ;
@@ -227,9 +227,9 @@ export default {
         display:flex;                       
         justify-content: center;            
     }
-    .imagesize image { 
+    image { 
         height:200px;
-        
+        width:50vw !important;
         line-height: 200px;
     }
     .image-item{

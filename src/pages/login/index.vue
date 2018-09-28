@@ -58,9 +58,9 @@ export default {
 		},
 		handleLogin(){
 			const self =this;
-			this.userName = 'ex_user';
+			// this.userName = 'ex_user';
 			// this.userName = 'sean.liu';
-			this.passWord = 'admin';
+			// this.passWord = 'admin';
 			if(!this.userName){
 				return wx.showToast({
 					title: '请输入用户名',
